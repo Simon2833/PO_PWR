@@ -14,10 +14,9 @@ Wrogie - Agresywne dla wszystkich bonusy do statystyk z uwagi na brak możliwoś
 •	Wielkość mapy - Podawana przez użytkownika (min. 10x10, max.?)
  
 •	Rodzaje jednostek :
-
-Wojownik - słaby zasięg ataku, średnia siła ataku, duży pancerz
-Pikinier - średni zasięg ataku, duża siła ataku, średni pancerz
-Łucznik - duży zasięg ataku, mała siła ataku, blisko zerowy pancerz
+- Wojownik - słaby zasięg ataku, średnia siła ataku, duży pancerz
+- Pikinier - średni zasięg ataku, duża siła ataku, średni pancerz
+- Łucznik - duży zasięg ataku, mała siła ataku, blisko zerowy pancerz
  
 •	Losowe Wielkie stwory nieprzyjazne - Będą to prehistoryczne stworzenia (np. Smok wawelski ;) ) krótki zasięg a reszta statystyk duża, po zneutralizowaniu generuje dużo jedzenia
  
