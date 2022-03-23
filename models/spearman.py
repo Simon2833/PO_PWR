@@ -1,6 +1,6 @@
-from models.villager import Villager
+from models.villager import villager
 #spearman class inherited from villager class
-class spearman(Villager):
+class spearman(villager):
 
     #variable 'tochange' will be changed when we decide what stats this class should have
     tochange = 3
