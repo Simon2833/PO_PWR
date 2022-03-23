@@ -1,3 +1,4 @@
+#tribe class---
 class tribe:
     def __init__(self, id, population, food, status, attitude):
         self.id = id

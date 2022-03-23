@@ -1,3 +1,13 @@
+import random
+
+#resource class----
 class resource:
-    def __init__(self, position):
-        self.position = position
+
+    food_list = []
+
+    def __init__(self, coy, cox):
+        self.cox = cox
+        self.coy = coy
+
+
+
