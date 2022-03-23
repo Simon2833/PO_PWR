@@ -1,3 +1,4 @@
+#monster class----
 class monster:
     def __init__(self, name, maxhp, attack, armor, range, loot, position):
         self.name = name

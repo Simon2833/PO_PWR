@@ -1,5 +1,5 @@
 #basic villager class
-class villager:
+class Villager:
     def __init__(self, name, maxhp, armor, tribe, attack, morale, range, position):
         self.name = name
         self.maxhp = maxhp
