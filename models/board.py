@@ -21,10 +21,10 @@ class board:
     def board_generate(self, tab, max_food):
         food_count = 0
         while(food_count != max_food):
-            pos = models.math.random_pos(self.coy, self.cox)
-            if(tab[pos[0]][pos[1]] != 1):
-                tab[pos[0]][pos[1]] = 1
-                models.resource.food_list.append(models.resource(pos[0], pos[1]))
+            pos = models.math.random_pos(self.cox, self.coy)
+            if(tab[pos[1]][pos[0]] != 1):
+                tab[pos[1]][pos[0]] = 1
+                models.resource.food_list.append(models.resource(pos[1], pos[0]))
                 food_count += 1
         for y in range(len(tab)):
             print()

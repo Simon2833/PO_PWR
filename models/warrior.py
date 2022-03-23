@@ -1,7 +1,7 @@
-from models.villager import Villager
+from models.villager import villager
 
 #warrior class inherited from villager class
-class warrior(Villager):
+class warrior(villager):
 
     #variable 'tochange' will be changed when we decide what stats this class should have
     tochange = 3

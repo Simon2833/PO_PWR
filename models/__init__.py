@@ -7,7 +7,6 @@ from models.spearman import spearman
 from models.resource import resource
 from models.board import board
 from models.math import math
-
-from models.villager import Villager
+from models.villager import villager
 
 
