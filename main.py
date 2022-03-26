@@ -1,16 +1,20 @@
 import models
 
-
-max_food = 10
+# Starting variables which user will be inputting
+maxMonster = 1
+maxFood = 1
 
 
 def main():
+    # BOARD INITIALIZING
+    board = models.board(10, 10)
+    tab = board.boardInit()
 
-    board = models.board(24, 10)
+    # BOARD GENERATING
+    tab = board.boardGenerate(tab, maxFood, maxMonster)
 
-    tab = board.board_init()
-
-    tab = board.board_generate(tab, max_food)
+    # BOARD REFRESHING
+    # STILL IN WORK :(
 
 
 main()

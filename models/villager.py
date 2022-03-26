@@ -1,4 +1,4 @@
-#basic villager class
+# Basic villager class from whom every other citizen class is inherited
 class villager:
     def __init__(self, name, maxhp, armor, tribe, attack, morale, range, position):
         self.name = name

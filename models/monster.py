@@ -1,6 +1,10 @@
-#monster class----
+# Independent animal which is stronger than normal unit but can offer quality goods
 class monster:
-    def __init__(self, name, maxhp, attack, armor, range, loot, position):
+
+    # List of monsters used in board class to store objects in their categories
+    monsterList = []
+
+    def __init__(self, name, maxhp, attack, armor, range, loot, cox, coy):
         self.name = name
         self.maxhp = maxhp
         self.currenthp = maxhp
@@ -8,4 +12,5 @@ class monster:
         self.armor = armor
         self.range = range
         self.loot = loot
-        self.position = position
+        self.cox = cox
+        self.coy = coy

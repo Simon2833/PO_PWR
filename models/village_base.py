@@ -1,4 +1,4 @@
-#villag_base class
+# Main village base that will delete clan if destroyed
 class village_base:
     def __init__(self, maxhp, position, tribe):
         self.maxhp = maxhp
