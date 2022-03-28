@@ -4,6 +4,6 @@ class resource:
     # List of food used in board class to store objects in their categories
     foodList = []
 
-    def __init__(self, coy, cox):
+    def __init__(self, cox, coy):
         self.cox = cox
         self.coy = coy

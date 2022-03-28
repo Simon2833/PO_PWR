@@ -7,6 +7,6 @@ class archer(villager):
     # Variable 'tochange' will be changed when we decide what stats this class should have
     tochange = 3
 
-    def __init__(self, name, tribe, position, maxhp=tochange, attack=tochange, armor=tochange, morale=tochange, range=tochange):
-        super().__init__(name, maxhp, armor, tribe, attack, morale, position, range)
+    def __init__(self, tribe, cox, coy, name="Józio", maxhp=tochange, attack=tochange, armor=tochange, morale=tochange, range=tochange):
+        super().__init__(name, maxhp, armor, tribe, attack, morale, cox, coy, range)
         self.currenthp = maxhp
