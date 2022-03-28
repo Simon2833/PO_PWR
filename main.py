@@ -1,8 +1,9 @@
 import models
 
 # Starting variables which user will be inputting
-maxMonster = 1
-maxFood = 1
+maxMonster = 5
+maxFood = 5
+maxTribes = 5
 
 
 def main():
@@ -11,7 +12,7 @@ def main():
     tab = board.boardInit()
 
     # BOARD GENERATING
-    tab = board.boardGenerate(tab, maxFood, maxMonster)
+    tab = board.boardGenerate(tab, maxFood, maxMonster, maxTribes)
 
     # BOARD REFRESHING
     # STILL IN WORK :(
