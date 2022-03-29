@@ -9,7 +9,7 @@ class board:
         self.cox = cox
         self.coy = coy
 
-    # Where getting empty 2D list
+    # Here getting an empty 2D list
     def boardInit(self):
         tab = [[None] * self.cox for _ in range(self.coy)]
         return tab
@@ -36,32 +36,35 @@ class board:
 
     def villagersGenerate(self, tab, maxPopulation, tribeCount, basex, basey):
         populationCount = 0
+        listShortcut = models.village_base.baseList[tribeCount].populationList
         while (populationCount != maxPopulation):
             pos = models.calc.randomPos(self.cox, self.coy)
             while(models.calc.range(basex, basey, pos[0], pos[1]) >= 2):
                 pos = models.calc.randomPos(self.cox, self.coy)
             vil = random.randint(1, 3)
-            if (tab[pos[1]][pos[0]] not in [1, 2, 3, 4, 5, 6] and vil == 1):
-                tab[pos[1]][pos[0]] = 4
-                populationCount += 1
-                models.village_base.baseList[tribeCount].populationList.append(models.warrior(models.village_base.baseList[tribeCount].id, pos[0], pos[1]))
-            elif (tab[pos[1]][pos[0]] not in [1, 2, 3, 4, 5, 6] and vil == 2):
-                tab[pos[1]][pos[0]] = 5
-                populationCount += 1
-                models.village_base.baseList[tribeCount].populationList.append(models.spearman(models.village_base.baseList[tribeCount].id, pos[0], pos[1]))
-            elif (tab[pos[1]][pos[0]] not in [1, 2, 3, 4, 5, 6] and vil == 3):
-                tab[pos[1]][pos[0]] = 6
-                populationCount += 1
-                models.village_base.baseList[tribeCount].populationList.append(models.archer(models.village_base.baseList[tribeCount].id, pos[0], pos[1]))
+            for i in range(1, 3):
+                if (tab[pos[1]][pos[0]] not in [1, 2, 3, 4, 5, 6] and vil == i):
+                    if vil == 1:
+                        populationCount += 1
+                        tab[pos[1]][pos[0]] = 4
+                        listShortcut.append(models.warrior(models.village_base.baseList[tribeCount].id, pos[0], pos[1]))
+                    elif vil == 2:
+                        populationCount += 1
+                        tab[pos[1]][pos[0]] = 5
+                        listShortcut.append(models.spearman(models.village_base.baseList[tribeCount].id, pos[0], pos[1]))
+                    elif vil == 3:
+                        populationCount += 1
+                        tab[pos[1]][pos[0]] = 6
+                        listShortcut.append(models.archer(models.village_base.baseList[tribeCount].id, pos[0], pos[1]))
 
     def isNext(self, pos, tribeCount):
         x = 0
         if(tribeCount == 1):
-            if(models.calc.range(models.village_base.baseList[tribeCount-1].cox, models.village_base.baseList[tribeCount-1].coy, pos[0], pos[1]) >= 4):
+            if(models.calc.range(models.village_base.baseList[tribeCount-1].cox, models.village_base.baseList[tribeCount-1].coy, pos[0], pos[1]) >= 3):
                 return pos
         while (x != tribeCount):
             for i in range(1, tribeCount+1):
-                if(models.calc.range(models.village_base.baseList[tribeCount-i].cox, models.village_base.baseList[tribeCount-i].coy, pos[0], pos[1]) >= 4):
+                if(models.calc.range(models.village_base.baseList[tribeCount-i].cox, models.village_base.baseList[tribeCount-i].coy, pos[0], pos[1]) >= 3):
                     x = x + 1
             if(x != tribeCount):
                 x = 0
@@ -82,9 +85,9 @@ class board:
 
     # All the starting objects are generated on the previously empty board
     def boardGenerate(self, tab, maxFood, maxMonster, maxTribes):
+        self.tribeGenerate(tab, maxTribes)
         self.foodGenerate(tab, maxFood)
         self.monsterGenerate(tab, maxMonster)
-        self.tribeGenerate(tab, maxTribes)
         for y in range(len(tab)):
             print()
             for x in range(len(tab[y])):
