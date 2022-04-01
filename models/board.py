@@ -34,9 +34,22 @@ class board:
                 models.monster.monsterList.append(models.monster("wiesio", 100, 10, 10, 1, "food", pos[1], pos[0]))
                 monsterCount += 1
 
+    def tribeGenerate(self, tab, maxTribes):
+        tribeCount = 0
+        while (tribeCount != maxTribes):
+            pos = models.calc.randomPos(self.cox, self.coy)
+            if (tribeCount != 0):
+                pos = self.isNext(pos, tribeCount)
+            if (tab[pos[1]][pos[0]] not in [1, 2, 3, 4, 5, 6]):
+                tab[pos[1]][pos[0]] = 3
+                models.village_base.baseList.append(models.village_base(pos[0], pos[1]))
+                self.villagersGenerate(tab, models.village_base.baseList[tribeCount].population, tribeCount, pos[0], pos[1])
+                tribeCount += 1
+
     def villagersGenerate(self, tab, maxPopulation, tribeCount, basex, basey):
         populationCount = 0
-        listShortcut = models.village_base.baseList[tribeCount].populationList
+        baseShortcut = models.village_base.baseList[tribeCount]
+
         while (populationCount != maxPopulation):
             pos = models.calc.randomPos(self.cox, self.coy)
             while(models.calc.range(basex, basey, pos[0], pos[1]) >= 2):
@@ -47,15 +60,15 @@ class board:
                     if vil == 1:
                         populationCount += 1
                         tab[pos[1]][pos[0]] = 4
-                        listShortcut.append(models.warrior(models.village_base.baseList[tribeCount].id, pos[0], pos[1]))
+                        baseShortcut.populationList.append(models.warrior(baseShortcut.id, pos[0], pos[1]))
                     elif vil == 2:
                         populationCount += 1
                         tab[pos[1]][pos[0]] = 5
-                        listShortcut.append(models.spearman(models.village_base.baseList[tribeCount].id, pos[0], pos[1]))
+                        baseShortcut.populationList.append(models.spearman(baseShortcut.id, pos[0], pos[1]))
                     elif vil == 3:
                         populationCount += 1
                         tab[pos[1]][pos[0]] = 6
-                        listShortcut.append(models.archer(models.village_base.baseList[tribeCount].id, pos[0], pos[1]))
+                        baseShortcut.populationList.append(models.archer(baseShortcut.id, pos[0], pos[1]))
 
     def isNext(self, pos, tribeCount):
         x = 0
@@ -71,33 +84,14 @@ class board:
                 pos = models.calc.randomPos(self.cox, self.coy)
         return pos
 
-    def tribeGenerate(self, tab, maxTribes):
-        tribeCount = 0
-        while (tribeCount != maxTribes):
-            pos = models.calc.randomPos(self.cox, self.coy)
-            if (tribeCount != 0):
-                pos = self.isNext(pos, tribeCount)
-            if (tab[pos[1]][pos[0]] not in [1, 2, 3, 4, 5, 6]):
-                tab[pos[1]][pos[0]] = 3
-                models.village_base.baseList.append(models.village_base(pos[0], pos[1]))
-                self.villagersGenerate(tab, models.village_base.baseList[tribeCount].population, tribeCount, pos[0], pos[1])
-                tribeCount += 1
-
     # All the starting objects are generated on the previously empty board
     def boardGenerate(self, tab, maxFood, maxMonster, maxTribes):
         self.tribeGenerate(tab, maxTribes)
         self.foodGenerate(tab, maxFood)
         self.monsterGenerate(tab, maxMonster)
         for y in range(len(tab)):
-            print()
             for x in range(len(tab[y])):
                 if (tab[y][x] not in [1, 2, 3, 4, 5, 6]):
                     tab[y][x] = 0
 
-                print(tab[y][x], end="|")
-
         return tab
-
-    # For first villagers we need function similar to food and monster
-    # where we create village_base and after that
-    # we add later agreed amount of villager one or two block from base

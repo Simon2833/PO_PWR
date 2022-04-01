@@ -14,6 +14,10 @@ def main():
     # BOARD GENERATING
     tab = board.boardGenerate(tab, maxFood, maxMonster, maxTribes)
 
+    for y in range(len(tab)):
+        print()
+        for x in range(len(tab[y])):
+            print(tab[y][x], end="|")
     # BOARD REFRESHING
     # STILL IN WORK :(
 
