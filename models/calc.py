@@ -48,16 +48,16 @@ class calc:
             for j in range(1, compareList[i].range+1):
                 y = calc.direction("south", x, y)
                 x = calc.direction("west", x, y)
-                for k in range(2):
+                for k in range(2*j):
                     y = calc.direction("north", x, y)
                     calc.ifInBoard(compareList, tab, position, x, y, i)
-                for k in range(2):
+                for k in range(2*j):
                     x = calc.direction("east", x, y)
                     calc.ifInBoard(compareList, tab, position, x, y, i)
-                for k in range(2):
+                for k in range(2*j):
                     y = calc.direction("south", x, y)
                     calc.ifInBoard(compareList, tab, position, x, y, i)
-                for k in range(2):
+                for k in range(2*j):
                     x = calc.direction("west", x, y)
                     calc.ifInBoard(compareList, tab, position, x, y, i)
             print()
