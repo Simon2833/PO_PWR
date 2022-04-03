@@ -4,9 +4,7 @@ from models.villager import villager
 # One of three tribe classes which will be concluded in simulation
 class spearman(villager):
 
-    # Variable 'tochange' will be changed when we decide what stats this class should have
-    tochange = 3
 
-    def __init__(self, tribe, cox, coy, name="Radzio", maxhp=tochange, attack=tochange, armor=tochange, morale=tochange, range=tochange):
-        super().__init__(name, maxhp, armor, tribe, attack, morale, cox, coy, range)
+    def __init__(self, id, tribe, cox, coy, maxhp=150, attack=25, armor=3, range=2):
+        super().__init__(id, maxhp, armor, tribe, attack, cox, coy, range)
         self.currenthp = maxhp

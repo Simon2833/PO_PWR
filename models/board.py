@@ -21,7 +21,7 @@ class board:
             pos = models.calc.randomPos(self.cox, self.coy)
             if (tab[pos[1]][pos[0]] not in [1, 2, 3, 4, 5, 6]):
                 tab[pos[1]][pos[0]] = 1
-                models.resource.foodList.append(models.resource(pos[1], pos[0]))
+                models.resource.resourceList.append(models.resource(pos[0], pos[1]))
                 foodCount += 1
 
     # Function generates random coordinates and if the spot is empty makes new monster object in monster list with those coordinates
@@ -31,7 +31,7 @@ class board:
             pos = models.calc.randomPos(self.cox, self.coy)
             if (tab[pos[1]][pos[0]] not in [1, 2, 3, 4, 5, 6]):
                 tab[pos[1]][pos[0]] = 2
-                models.monster.monsterList.append(models.monster("wiesio", 100, 10, 10, 1, "food", pos[1], pos[0]))
+                models.monster.monsterList.append(models.monster(100, 10, 10, 1, "food", pos[0], pos[1]))
                 monsterCount += 1
 
     def tribeGenerate(self, tab, maxTribes):
@@ -49,35 +49,36 @@ class board:
     def villagersGenerate(self, tab, maxPopulation, tribeCount, basex, basey):
         populationCount = 0
         baseShortcut = models.village_base.baseList[tribeCount]
-
         while (populationCount != maxPopulation):
             pos = models.calc.randomPos(self.cox, self.coy)
-            while(models.calc.range(basex, basey, pos[0], pos[1]) >= 2):
+            while(models.calc.rangeBetween(basex, basey, pos[0], pos[1]) >= 2):
                 pos = models.calc.randomPos(self.cox, self.coy)
             vil = random.randint(1, 3)
             for i in range(1, 3):
+                lenOfPopulationList = len(baseShortcut.populationList)
                 if (tab[pos[1]][pos[0]] not in [1, 2, 3, 4, 5, 6] and vil == i):
                     if vil == 1:
                         populationCount += 1
                         tab[pos[1]][pos[0]] = 4
-                        baseShortcut.populationList.append(models.warrior(baseShortcut.id, pos[0], pos[1]))
+                        baseShortcut.populationList.append(models.warrior(lenOfPopulationList, baseShortcut.id, pos[0], pos[1]))
                     elif vil == 2:
                         populationCount += 1
                         tab[pos[1]][pos[0]] = 5
-                        baseShortcut.populationList.append(models.spearman(baseShortcut.id, pos[0], pos[1]))
+                        baseShortcut.populationList.append(models.spearman(lenOfPopulationList, baseShortcut.id, pos[0], pos[1]))
                     elif vil == 3:
                         populationCount += 1
                         tab[pos[1]][pos[0]] = 6
-                        baseShortcut.populationList.append(models.archer(baseShortcut.id, pos[0], pos[1]))
+                        baseShortcut.populationList.append(models.archer(lenOfPopulationList, baseShortcut.id, pos[0], pos[1]))
 
     def isNext(self, pos, tribeCount):
         x = 0
+        baseListShortcut = models.village_base.baseList
         if(tribeCount == 1):
-            if(models.calc.range(models.village_base.baseList[tribeCount-1].cox, models.village_base.baseList[tribeCount-1].coy, pos[0], pos[1]) >= 3):
+            if(models.calc.rangeBetween(baseListShortcut[tribeCount-1].cox, baseListShortcut[tribeCount-1].coy, pos[0], pos[1]) >= 3):
                 return pos
         while (x != tribeCount):
             for i in range(1, tribeCount+1):
-                if(models.calc.range(models.village_base.baseList[tribeCount-i].cox, models.village_base.baseList[tribeCount-i].coy, pos[0], pos[1]) >= 3):
+                if(models.calc.rangeBetween(baseListShortcut[tribeCount-i].cox, baseListShortcut[tribeCount-i].coy, pos[0], pos[1]) >= 3):
                     x = x + 1
             if(x != tribeCount):
                 x = 0

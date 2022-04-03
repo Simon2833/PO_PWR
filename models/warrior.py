@@ -7,6 +7,6 @@ class warrior(villager):
     # Variable 'tochange' will be changed when we decide what stats this class should have
     tochange = 3
 
-    def __init__(self, tribe, cox, coy, name="Edzio", maxhp=tochange, attack=tochange, armor=tochange, morale=tochange, range=tochange):
-        super().__init__(name, maxhp, armor, tribe, attack, morale, cox, coy, range)
+    def __init__(self, id, tribe, cox, coy, maxhp=200, attack=40, armor=5, range=1):
+        super().__init__(id, maxhp, armor, tribe, attack, cox, coy, range)
         self.currenthp = maxhp

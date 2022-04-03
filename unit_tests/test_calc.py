@@ -21,5 +21,5 @@ class test_random_pos(unittest.TestCase):
         assert True or False
 
     def testRange(self):
-        answer = calc.range(self.rand, self.rand, self.rand, self.rand)
+        answer = calc.rangeBetween(self.rand, self.rand, self.rand, self.rand)
         assert (0 <= answer <= math.sqrt(19602))

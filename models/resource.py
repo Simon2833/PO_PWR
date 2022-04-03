@@ -2,8 +2,9 @@
 class resource:
 
     # List of food used in board class to store objects in their categories
-    foodList = []
+    resourceList = []
 
     def __init__(self, cox, coy):
+        self.id = len(self.resourceList)
         self.cox = cox
         self.coy = coy
