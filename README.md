@@ -1,44 +1,46 @@
 # PO_PWR
-
-**Plemiona**\
- Symulacja plemion zaczyna się od stworzenia proceduralnie generowanej mapy. Całość skupia się na życiu poszczególnych plemion (ich ilość jest dobrana przez użytkownika), które wraz z biegiem czasu zaczynają ze sobą walczyć lub zakładać sojusze (poprzez scalenie). W ich środowisku losowo występują zasoby naturalne (pokarm szczególnie ważny w obliczu panującego głodu, który zagraża życiu) i czyhające w cieniu niebezpieczeństwa (wrogo nastwione stworzenia). W osadach można odnaleźć różne klasy jednostek (np. wojownicy, łucznicy).
-
-WERSJA ROZSZERZONA
-
-• Ilość plemion - Ustalana przez użytkownika (min. 2)
-
-• Wrogie/Przyjazne plemiona - Plemie będzie generowane losowo ze statusem przyjaznego lub wrogiego
-Przyjazny - Może zawierać sojusze z innymi przyjaznymi plemionami
-Wrogie - Agresywne dla wszystkich bonusy do statystyk z uwagi na brak możliwości sojuszy
-
-• Wielkość mapy - Podawana przez użytkownika (min. 10x10, max.?)
-
-• Rodzaje jednostek :
-
-- Wojownik - słaby zasięg ataku, średnia siła ataku, duży pancerz
-- Pikinier - średni zasięg ataku, duża siła ataku, średni pancerz
-- Łucznik - duży zasięg ataku, mała siła ataku, blisko zerowy pancerz
-
-• Losowe Wielkie stwory nieprzyjazne - Będą to prehistoryczne stworzenia (np. Smok wawelski ;) ) krótki zasięg a reszta statystyk duża, po zneutralizowaniu generuje dużo jedzenia
-
-• Morale - Są to bonusy lub minusy do statystyk zależne od ilości populacji plemienia. Jeżeli do plemienia dochodzi kolejny osadnik morale zostają zwiększone, a przy utracie jednego z nich - zmniejszone. (zaimplementujemy rozwiązanie które zapobiegnie wzrostowi morali do nieskonczonosci przy zerowym wzroscie popuacji na dluzszej przestrzeni czasu)
-
-• Zniszczenie bazy plemiennej - Wszyscy przynależni do tego plemienia osadnicy stają się bezimiennymi włóczęgami tułającymi się po mapie z minimalną szansą dołączenia do innego plemienia (podczas interakcji z członkiem napotkanego plemienia)
-
-• Surowce naturalne - Będzie to uznawane za jedzenie które pozwala powiększyć populację o jedną osobę. Członek osady musi napotkać ten owoc w zasięgu swojej interakcji i automatycznie jest on zbierany co aktywuje funkcję zwiększenia populacji. Jeżeli osada nie znajdzie przez długi okres czasu żadnego jedzenia to następuje głód. Jeżeli dalej nie znajdą żadnego pożywienia co jakiś czas losowy osadnik ginie (Okres głodu zmniejsza także morale na czas jego trwania).
-
-• Wojna/Sojusze :
-
-Wojna - Rozpoczyna się jeżeli np. jakaś jednostka umrze podczas walki, będzie trwała aż do zniszczenia bazy jednego z plemion (jeżeli zostaną pokonani wszyscy osadnicy baza autmatycznie znika razem z plemieniem), jeżeli wojna będzie trwała za długo z każdą rundą zwiększa się szansa na nastanie pokoju między nimi.
-Sojusz - Dalej planujemy możliwości sojuszu, może to być mała szansa podczas interakcji między ich osadnikami jednak to jest jeszcze do zmiany
-
-• Menu z ustawieniami - Będzie to ekran główny z możliwością rozpoczęcia symulacji, wyjścia z niej, oraz ustawienia zasad gry:
-
-- liczba plemion
-- Ilość generowanego jedzenia
-- Wielkość mapy
-- Stosunek przyjaznych plemion do wrogich
-- Przycisk do ustawień losowych
-
-W przyszłości będziemy dodawać funkcje lub je usuwać jeżeli będą zbyt problematyczne/ambitne.
-Dalej myślimy nad rodzajem poruszania się postaci("sztuczna" inteligencja np. podczas wojny będą bardziej skupiać się na przeciwnikach niż podróży po świecie)
+Project is created within the Object-oriented Programming subject at [Wrocław University of Science and Technology](https://pwr.edu.pl/). We are using Python programing language and PyQ6 GUI library.
+## Contributors:
+- *Szymon Gruszecki [Simon2833](https://github.com/Simon2833)*
+- *Olaf Lesiuk [olafles](https://github.com/olafles)*
+- *Jakub Kęsik [Kubagf](https://github.com/Kubagf)*
+## Tribes
+---
+### Description:
+Simulation is based on behavior of people uniting into tribes. Main goal of each team basically is to survive among others.
+### Basic informations:
+- Quantity:
+     - Amount is defined by user (cannot enter number lesser than 2).
+- Map:
+    - Size is defined by user (minimum dimensions are 10x10).
+- Population:
+    - At the begining it is defined by user. In the later stages of simulation tribe can expand or shrink based on collected food and killed villagers / soldiers.
+- Units:
+    - Warrior - low range, moderate attack power, high defence,
+    - Spearman - medium range, high attack power, medium defence,
+    - Archer - high range, low attack power, low defence,
+    - Villager - all stats are low, unit is basically passive.
+- Enviroment:
+    - Monsters - they are randomly generated on the map, all stats are high except range. Basically they are hard to kill, but worth it,
+    - Resources - it is randomly generated on the map, used to expand tribe,
+    - Village base - main structure of tribe, if it is destroyed the tribe will fall.
+### Mechanics:
+- War - starts when one unit is killed by other tribe and it is going to last till one of the village base will be destroyed.
+- Aliance - there is minor chance that two tribes will be united. We still consider implementating this mechanic.
+- Morale - depends on the number of villagers and soldiers (garhering new units makes morale higher while killing units lowers it).
+### Graphical view on project:
+![Project scheme](/Schematic.png)
+## Plague
+---
+### Description:
+Simulation shows how plague spread over time and humans struggling to survive. Main goal of virus is to kill all humans before it gets fully cured.
+### Basic informations:
+- World population - starting value is defined by user, decrease over time (depending on lethality virus kills humans).
+- Map size - defined by user, minimum dimensions are 10x10.
+- Infectivity - starting value defined by user, can increase or decrease over time. Affects infection rate.
+- Severity - starting value defined by user, can increase or decrease over time. Affects  rate.
+- Lethality - starting value defined by user, can increase or decrease over time. Affects death rate.
+### Mechanics:
+- Evolution - the plague have minor chance to improve infectivity, severity and lethality.
+- Cure - progressing over time remedy to the desease. When it hit 100% the plague is cured and no new cases is possible.
+##### *We reserve the right to make changes to the implemented features.*
