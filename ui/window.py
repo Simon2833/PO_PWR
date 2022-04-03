@@ -7,11 +7,11 @@ class Window(QWidget):
 		super().__init__()
 
 
-		self.setGeometry(100, 100, 300, 300)	#xpos, ypos, height, width
+		self.setGeometry(0, 0, 1024, 1024)	#xpos, ypos, height, width
 		self.setWindowTitle("test window title")
 		#possible addition of icon in future with QtGui.QIcon
-		self.setFixedHeight(300)	#overwrites setGeometry values and makes them constant
-		self.setFixedWidth(300)		#	-//-
+		self.setFixedHeight(1024)	#overwrites setGeometry values and makes them constant
+		self.setFixedWidth(1024)		#	-//-
 
 		self.create_button()
 
@@ -27,7 +27,6 @@ class Window(QWidget):
 		menu.addAction("opt. 1")
 		menu.addAction("opt. 2")
 		menu.addAction("opt. 3")
-		button.setStyleSheet("QPushButton { text-align: left; }")
 		button.setMenu(menu)
 
 
