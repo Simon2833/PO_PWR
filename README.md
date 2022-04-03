@@ -1,5 +1,5 @@
 # PO_PWR
-Project is created within the Object-oriented Programming subject at [Wrocław University of Science and Technology](https://pwr.edu.pl/). We are using Python programing language and PyQ6 GUI library.
+Project is created within the Object-oriented Programming subject at [Wrocław University of Science and Technology](https://pwr.edu.pl/). We are using Python programing language and PyQt6 GUI library.
 ## Contributors:
 - *Szymon Gruszecki [Simon2833](https://github.com/Simon2833)*
 - *Olaf Lesiuk [olafles](https://github.com/olafles)*
@@ -19,7 +19,7 @@ Simulation is based on behavior of people uniting into tribes. Main goal of each
     - Warrior - low range, moderate attack power, high defence,
     - Spearman - medium range, high attack power, medium defence,
     - Archer - high range, low attack power, low defence,
-    - Villager - all stats are low, unit is basically passive.
+    - Villager - inheritance class for other units.
 - Enviroment:
     - Monsters - they are randomly generated on the map, all stats are high except range. Basically they are hard to kill, but worth it,
     - Resources - it is randomly generated on the map, used to expand tribe,
@@ -27,13 +27,13 @@ Simulation is based on behavior of people uniting into tribes. Main goal of each
 ### Mechanics:
 - War - starts when one unit is killed by other tribe and it is going to last till one of the village base will be destroyed.
 - Aliance - there is minor chance that two tribes will be united. We still consider implementating this mechanic.
-- Morale - depends on the number of villagers and soldiers (garhering new units makes morale higher while killing units lowers it).
+- Morale - depends on the number of villagers and soldiers (gathering new units makes morale higher while killing units lowers it).
 ### Graphical view on project:
 ![Project scheme](/Schematic.png)
 ## Plague
 ---
 ### Description:
-Simulation shows how plague spread over time and humans struggling to survive. Main goal of virus is to kill all humans before it gets fully cured.
+Simulation shows how plague spreads over time and humans struggling to survive. Main goal of virus is to kill all humans before it gets fully cured.
 ### Basic informations:
 - World population - starting value is defined by user, decrease over time (depending on lethality virus kills humans).
 - Map size - defined by user, minimum dimensions are 10x10.
