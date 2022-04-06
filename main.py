@@ -17,16 +17,15 @@ def main():
     # BOARD GENERATING
     tab = board.boardGenerate(tab, maxFood, maxMonster, maxTribes)
 
+    # BOARD PRINTING
     for y in range(len(tab)):
         print()
         for x in range(len(tab[y])):
             print(tab[y][x], end="|")
 
     print("--- %s seconds ---" % (time.time() - start_time))
-    models.calc.checkAllRange(tab, models.village_base.baseList, models.monster.monsterList)
-
-    # BOARD REFRESHING
-    # STILL IN WORK :(
+    # CHECKING BOARD IN RANGE OF EVERY OBJECT ON THE BOARD
+    models.calc.checkAllRange(tab, models.villageBase.baseList, models.monster.monsterList)
 
 
 main()

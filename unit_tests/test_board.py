@@ -67,14 +67,14 @@ class testBoard(unittest.TestCase):
                     count += 1
 
         for i in range(1, count):
-            pos = [models.village_base.baseList[i].cox, models.village_base.baseList[i].coy]
+            pos = [models.villageBase.baseList[i].cox, models.villageBase.baseList[i].coy]
             x = 0
             if(i == 1):
-                if(models.calc.rangeBetween(models.village_base.baseList[i-1].cox, models.village_base.baseList[i-1].coy, pos[0], pos[1]) >= 3):
+                if(models.calc.rangeBetween(models.villageBase.baseList[i-1].cox, models.villageBase.baseList[i-1].coy, pos[0], pos[1]) >= 3):
                     return True
             while (x != i):
                 for j in range(1, i+1):
-                    if(models.calc.rangeBetween(models.village_base.baseList[i-j].cox, models.village_base.baseList[i-j].coy, pos[0], pos[1]) >= 3):
+                    if(models.calc.rangeBetween(models.villageBase.baseList[i-j].cox, models.villageBase.baseList[i-j].coy, pos[0], pos[1]) >= 3):
                         x = x + 1
                 if(x != i):
                     x = 0

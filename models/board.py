@@ -34,6 +34,7 @@ class board:
                 models.monster.monsterList.append(models.monster(100, 10, 10, 1, "food", pos[0], pos[1]))
                 monsterCount += 1
 
+    # Function generates random coordinates and if the spot is empty makes new villageBase object in tribe list with those coordinates
     def tribeGenerate(self, tab, maxTribes):
         tribeCount = 0
         while (tribeCount != maxTribes):
@@ -42,13 +43,14 @@ class board:
                 pos = self.isNext(pos, tribeCount)
             if (tab[pos[1]][pos[0]] not in [1, 2, 3, 4, 5, 6]):
                 tab[pos[1]][pos[0]] = 3
-                models.village_base.baseList.append(models.village_base(pos[0], pos[1]))
-                self.villagersGenerate(tab, models.village_base.baseList[tribeCount].population, tribeCount, pos[0], pos[1])
+                models.villageBase.baseList.append(models.villageBase(pos[0], pos[1]))
+                self.villagersGenerate(tab, models.villageBase.baseList[tribeCount].population, tribeCount, pos[0], pos[1])
                 tribeCount += 1
 
+    # Function generates random coordinates and if the spot is empty makes new villager object in population list with those coordinates
     def villagersGenerate(self, tab, maxPopulation, tribeCount, basex, basey):
         populationCount = 0
-        baseShortcut = models.village_base.baseList[tribeCount]
+        baseShortcut = models.villageBase.baseList[tribeCount]
         while (populationCount != maxPopulation):
             pos = models.calc.randomPos(self.cox, self.coy)
             while(models.calc.rangeBetween(basex, basey, pos[0], pos[1]) >= 2):
@@ -69,10 +71,11 @@ class board:
                         populationCount += 1
                         tab[pos[1]][pos[0]] = 6
                         baseShortcut.populationList.append(models.archer(lenOfPopulationList, baseShortcut.id, pos[0], pos[1]))
-
+    
+    # Checks if villageBase is enough far from other bases to not stack them next to each other
     def isNext(self, pos, tribeCount):
         x = 0
-        baseListShortcut = models.village_base.baseList
+        baseListShortcut = models.villageBase.baseList
         if(tribeCount == 1):
             if(models.calc.rangeBetween(baseListShortcut[tribeCount-1].cox, baseListShortcut[tribeCount-1].coy, pos[0], pos[1]) >= 3):
                 return pos

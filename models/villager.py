@@ -1,4 +1,4 @@
-from models.village_base import village_base
+from models.villageBase import villageBase
 
 
 # Basic villager class from whom every other citizen class is inherited
@@ -14,3 +14,4 @@ class villager:
         self.range = range
         self.cox = cox
         self.coy = coy
+        self.type = "villager"
