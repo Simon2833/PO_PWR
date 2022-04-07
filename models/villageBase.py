@@ -2,7 +2,7 @@ from models.calc import calc
 
 
 # Main village base that will delete clan if destroyed
-class village_base:
+class villageBase:
 
     x = calc.yesOrNo()
     baseList = []

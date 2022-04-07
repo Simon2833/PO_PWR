@@ -14,3 +14,4 @@ class monster:
         self.loot = loot
         self.cox = cox
         self.coy = coy
+        self.type = "monster"

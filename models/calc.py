@@ -15,6 +15,7 @@ class calc:
 
     @classmethod
     def yesOrNo(cls):
+        # Help to randomize choosing between two things, for example if tribe is aggressive or not
         x = random.randint(0, 1)
         if x == 1:
             return True
@@ -23,6 +24,7 @@ class calc:
 
     @classmethod
     def rangeBetween(cls, firstx, firsty, secondx, secondy):
+        # Finds a distance between two locations
         x = abs(firstx - secondx)
         y = abs(firsty - secondy)
 
@@ -33,6 +35,7 @@ class calc:
 
     @classmethod
     def checkAllRange(cls, tab, baseList, monsterList):
+        # Parent function for checkRange to check all objects at once
         for i in range(len(baseList)):
             calc.checkRange(tab, baseList[i].populationList)
 
@@ -40,9 +43,9 @@ class calc:
 
     @classmethod
     def checkRange(cls, tab, compareList):
+        # In chosen list it checks for every position around(in a circle) given object, according to this object's range
         for i in range(len(compareList)):
             position = (compareList[i].cox, compareList[i].coy)
-            print(position)
             x = 0
             y = 0
             for j in range(1, compareList[i].range+1):
@@ -64,15 +67,20 @@ class calc:
 
     @classmethod
     def ifInBoard(cls, compareList, tab, position, x, y, i):
+        # Function for possible error if checked position would be outside of board's range
         if(0 > (compareList[i].cox + x) or (len(tab[1])-1) < (compareList[i].cox + x) or 0 > (compareList[i].coy + y) or (len(tab)-1) < (compareList[i].coy + y)):
-            print(i, "out of board")
+            pass
         else:
+            # Checks if there is villager in monsters range
             checked = tab[compareList[i].coy + y][compareList[i].cox + x]
-            print(i, position, checked)
+            if(compareList[i].type == "monster"):
+                if(checked in [4, 5, 6]):
+                    print("monster with id {} attacked villager".format(compareList[i].id))
 
     @classmethod
-    # Board is inverted, when we go up Y is decreasing
     def direction(cls, direction, x, y):
+        # Function to switch between checked positions
+        # Board is inverted, when we go up Y is decreasing
         if(direction == "north"):
             y = y - 1
             return y
