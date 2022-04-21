@@ -1,4 +1,5 @@
 import render
+import MenuLayout
 from PyQt6.QtWidgets import QApplication, QWidget, QGraphicsView, QGraphicsScene
 from PyQt6.QtGui import QPen, QBrush
 from PyQt6.QtCore import Qt
@@ -17,12 +18,18 @@ print("dupa")
 
 
 app = QApplication([])
-window = render.Window()
-window.show()
+RenderWindow = render.Window()
+RenderWindow.show()
+
+ui = MenuLayout.Ui_Form()
+ui.setupUi(Form)
+Form.show()
+
+
 sys.exit(app.exec())
 
 
-window.PaintRectangle(10, 10)
-window.scene.update()
+RenderWindow.PaintRectangle(10, 10)
+RenderWindow.scene.update()
 app.update()
-window.view.update()
+RenderWindow.view.update()
