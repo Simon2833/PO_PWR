@@ -21,8 +21,9 @@ window = render.Window()
 window.show()
 sys.exit(app.exec())
 
+window.PaintRectangle(200, 120)
 
-window.PaintRectangle(10, 10)
-window.scene.update()
+
 app.update()
+window.update()
 window.view.update()
