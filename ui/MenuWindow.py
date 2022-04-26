@@ -1,3 +1,4 @@
+
 import sys
 import MenuLayout
 from PyQt6.QtWidgets import *
