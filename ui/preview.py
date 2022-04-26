@@ -28,7 +28,11 @@ Form.show()
 
 sys.exit(app.exec())
 
+window.PaintRectangle(200, 120)
 
+app.update()
+window.update()
+window.view.update()
 RenderWindow.PaintRectangle(10, 10)
 RenderWindow.scene.update()
 app.update()

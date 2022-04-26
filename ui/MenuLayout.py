@@ -7,9 +7,17 @@
 
 
 from PyQt6 import QtCore, QtGui, QtWidgets
+from PyQt6.QtWidgets import QApplication
 
 
 class Ui_Form(object):
+
+
+
+    def clickedbutton(self):
+        self.condition = True
+        app = QApplication.instance()
+        app.closeAllWindows()
     def setupUi(self, Form):
         Form.setObjectName("Form")
         Form.resize(500, 633)
@@ -17,6 +25,9 @@ class Ui_Form(object):
         Form.setStyleSheet("\n"
 "background-color: rgb(211, 211, 211);")
         self.layoutWidget = QtWidgets.QWidget(Form)
+
+        self.condition = False
+
         self.layoutWidget.setGeometry(QtCore.QRect(9, 3, 481, 611))
         self.layoutWidget.setObjectName("layoutWidget")
         self.verticalLayout = QtWidgets.QVBoxLayout(self.layoutWidget)
@@ -250,7 +261,11 @@ class Ui_Form(object):
         self.verticalLayout.addLayout(self.horizontalLayout_11)
         self.pushButton = QtWidgets.QPushButton(self.layoutWidget)
         self.pushButton.setObjectName("pushButton")
-        self.verticalLayout.addWidget(self.pushButton)
+        self.pushButton.clicked.connect(self.clickedbutton)
+        self.verticalLayout.addWidget(self.pushButton)  
+
+        
+
 
         self.retranslateUi(Form)
         self.horizontalSlider_dimX.valueChanged['int'].connect(self.dimX_prev.setNum) # type: ignore
@@ -282,7 +297,9 @@ class Ui_Form(object):
         self.TribeAmount_prev.setText(_translate("Form", "2"))
         self.label_9.setText(_translate("Form", "Initial Population"))
         self.InitPopulation_prev.setText(_translate("Form", "2"))
-        self.pushButton.setText(_translate("Form", "PushButton"))
+        self.pushButton.setText(_translate("Form", "Start"))
+
+
 
 
 if __name__ == "__main__":
