@@ -1,5 +1,6 @@
 import random
 import math
+import models
 
 
 # Class where all the repeated calc functions are grouped up in one place
@@ -45,7 +46,6 @@ class calc:
     def checkRange(cls, tab, compareList):
         # In chosen list it checks for every position around(in a circle) given object, according to this object's range
         for i in range(len(compareList)):
-            position = (compareList[i].cox, compareList[i].coy)
             x = 0
             y = 0
             for j in range(1, compareList[i].range+1):
@@ -53,20 +53,19 @@ class calc:
                 x = calc.direction("west", x, y)
                 for k in range(2*j):
                     y = calc.direction("north", x, y)
-                    calc.ifInBoard(compareList, tab, position, x, y, i)
+                    calc.ifInBoard(compareList, tab, x, y, i)
                 for k in range(2*j):
                     x = calc.direction("east", x, y)
-                    calc.ifInBoard(compareList, tab, position, x, y, i)
+                    calc.ifInBoard(compareList, tab, x, y, i)
                 for k in range(2*j):
                     y = calc.direction("south", x, y)
-                    calc.ifInBoard(compareList, tab, position, x, y, i)
+                    calc.ifInBoard(compareList, tab, x, y, i)
                 for k in range(2*j):
                     x = calc.direction("west", x, y)
-                    calc.ifInBoard(compareList, tab, position, x, y, i)
-            print()
+                    calc.ifInBoard(compareList, tab, x, y, i)
 
     @classmethod
-    def ifInBoard(cls, compareList, tab, position, x, y, i):
+    def ifInBoard(cls, compareList, tab, x, y, i):
         # Function for possible error if checked position would be outside of board's range
         if(0 > (compareList[i].cox + x) or (len(tab[1])-1) < (compareList[i].cox + x) or 0 > (compareList[i].coy + y) or (len(tab)-1) < (compareList[i].coy + y)):
             pass
@@ -75,7 +74,18 @@ class calc:
             checked = tab[compareList[i].coy + y][compareList[i].cox + x]
             if(compareList[i].type == "monster"):
                 if(checked in [4, 5, 6]):
-                    print("monster with id {} attacked villager".format(compareList[i].id))
+                    for villagerlist in models.villageBase.baseList:
+                        for villager in villagerlist.populationList:
+                            if(compareList[i].cox + x == villager.cox and compareList[i].coy + y == villager.coy):
+                                print("monster {} attacked villager {} from base {}".format(compareList[i].id, villager.id, villagerlist.id))
+                elif(compareList[i].type == "villager"):
+                    if(checked in [4, 5, 6]):
+                        for villagerlist in models.villageBase.baseList:
+                            for villager in villagerlist.populationList:
+                                if(compareList[i].cox + x == villager.cox and compareList[i].coy + y == villager.coy):
+                                    print("villager {} from base {} attacked villager {} from base {}".format(compareList[i].id, models.villageBase.baseList[compareList[i].tribe], villager.id, villagerlist.id))
+                    elif(checked == 2):
+                        pass
 
     @classmethod
     def direction(cls, direction, x, y):
