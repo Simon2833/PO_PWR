@@ -8,4 +8,6 @@ from models.spearman import spearman
 from models.resource import resource
 from models.board import board
 from models.calc import calc
-from models.villager import villager
+from models.unitDynamic import unitDynamic
+from models.unit import unit
+from models.unitStatic import unitStatic

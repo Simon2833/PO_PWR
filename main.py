@@ -4,7 +4,7 @@ import time
 
 start_time = time.time()
 # Starting variables which user will be inputting
-maxMonster = 5
+maxMonster = 3
 maxFood = 5
 maxTribes = 5
 

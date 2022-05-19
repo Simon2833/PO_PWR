@@ -31,7 +31,7 @@ class board:
             pos = models.calc.randomPos(self.cox, self.coy)
             if (tab[pos[1]][pos[0]] not in [1, 2, 3, 4, 5, 6]):
                 tab[pos[1]][pos[0]] = 2
-                models.monster.monsterList.append(models.monster(100, 10, 10, 1, "food", pos[0], pos[1]))
+                models.monster.monsterList.append(models.monster(pos[0], pos[1], len(models.monster.monsterList)))
                 monsterCount += 1
 
     # Function generates random coordinates and if the spot is empty makes new villageBase object in tribe list with those coordinates
@@ -59,18 +59,19 @@ class board:
             for i in range(1, 3):
                 lenOfPopulationList = len(baseShortcut.populationList)
                 if (tab[pos[1]][pos[0]] not in [1, 2, 3, 4, 5, 6] and vil == i):
-                    if vil == 1:
-                        populationCount += 1
-                        tab[pos[1]][pos[0]] = 4
-                        baseShortcut.populationList.append(models.warrior(lenOfPopulationList, baseShortcut.id, pos[0], pos[1]))
-                    elif vil == 2:
-                        populationCount += 1
-                        tab[pos[1]][pos[0]] = 5
-                        baseShortcut.populationList.append(models.spearman(lenOfPopulationList, baseShortcut.id, pos[0], pos[1]))
-                    elif vil == 3:
-                        populationCount += 1
-                        tab[pos[1]][pos[0]] = 6
-                        baseShortcut.populationList.append(models.archer(lenOfPopulationList, baseShortcut.id, pos[0], pos[1]))
+                    match vil:
+                        case 1:
+                            populationCount += 1
+                            tab[pos[1]][pos[0]] = 4
+                            baseShortcut.populationList.append(models.warrior(pos[0], pos[1], lenOfPopulationList, baseShortcut.id))
+                        case 2:
+                            populationCount += 1
+                            tab[pos[1]][pos[0]] = 5
+                            baseShortcut.populationList.append(models.spearman(pos[0], pos[1], lenOfPopulationList, baseShortcut.id))
+                        case 3:
+                            populationCount += 1
+                            tab[pos[1]][pos[0]] = 6
+                            baseShortcut.populationList.append(models.archer(pos[0], pos[1], lenOfPopulationList, baseShortcut.id))
     
     # Checks if villageBase is enough far from other bases to not stack them next to each other
     def isNext(self, pos, tribeCount):

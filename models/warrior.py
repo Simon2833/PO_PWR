@@ -1,12 +1,14 @@
-from models.villager import villager
+from models.unitDynamic import unitDynamic
 
 
 # One of three tribe classes which will be concluded in simulation
-class warrior(villager):
+class warrior(unitDynamic):
 
-    # Variable 'tochange' will be changed when we decide what stats this class should have
-    tochange = 3
-
-    def __init__(self, id, tribe, cox, coy, maxhp=200, attack=40, armor=5, range=1):
-        super().__init__(id, maxhp, armor, tribe, attack, cox, coy, range)
+    def __init__(self, cox, coy, id, tribe, maxhp=200, attack=40, armor=5, range=1):
+        super().__init__(cox, coy, id, maxhp, attack, armor, range)
         self.currenthp = maxhp
+        self.tribe = tribe
+        self.type = "villager"
+
+
+
