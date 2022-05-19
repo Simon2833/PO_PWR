@@ -1,3 +1,5 @@
+please use python version 3.10 or newer
+
 # PO_PWR
 Project is created within the Object-oriented Programming subject at [Wrocław University of Science and Technology](https://pwr.edu.pl/). We are using Python programing language and PyQt6 GUI library.
 ## Contributors:
