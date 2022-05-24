@@ -21,7 +21,7 @@ class board:
             pos = models.calc.randomPos(self.cox, self.coy)
             if (tab[pos[1]][pos[0]] not in [1, 2, 3, 4, 5, 6]):
                 tab[pos[1]][pos[0]] = 1
-                models.resource.resourceList.append(models.resource(pos[0], pos[1]))
+                models.resource.resourceList.append(models.resource(pos[0], pos[1], len(models.resource.resourceList)))
                 foodCount += 1
 
     # Function generates random coordinates and if the spot is empty makes new monster object in monster list with those coordinates
@@ -43,7 +43,7 @@ class board:
                 pos = self.isNext(pos, tribeCount)
             if (tab[pos[1]][pos[0]] not in [1, 2, 3, 4, 5, 6]):
                 tab[pos[1]][pos[0]] = 3
-                models.villageBase.baseList.append(models.villageBase(pos[0], pos[1]))
+                models.villageBase.baseList.append(models.villageBase(pos[0], pos[1], len(models.villageBase.baseList)))
                 self.villagersGenerate(tab, models.villageBase.baseList[tribeCount].population, tribeCount, pos[0], pos[1])
                 tribeCount += 1
 

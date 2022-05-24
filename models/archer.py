@@ -10,6 +10,7 @@ class archer(unitDynamic):
         self.currenthp = maxhp
         self.tribe = tribe
         self.type = "villager"
+        self.job = "archer"
 
 
 

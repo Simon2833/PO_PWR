@@ -9,6 +9,6 @@ class warrior(unitDynamic):
         self.currenthp = maxhp
         self.tribe = tribe
         self.type = "villager"
-
+        self.job = "warrior"
 
 

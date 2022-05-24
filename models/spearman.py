@@ -9,4 +9,5 @@ class spearman(unitDynamic):
         self.currenthp = maxhp
         self.tribe = tribe
         self.type = "villager"
+        self.job = "spearman"
 

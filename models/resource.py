@@ -7,8 +7,5 @@ class resource(unitStatic):
     # List of food used in board class to store objects in their categories
     resourceList = []
 
-    def __init__(self, cox, coy):
-        super().__init__(cox, coy)
-        self.id = len(self.resourceList)
-        self.cox = cox
-        self.coy = coy
+    def __init__(self, cox, coy, id):
+        super().__init__(cox, coy, id)
