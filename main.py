@@ -1,17 +1,28 @@
 import models
 import time
+import sys
+import ui.MenuLayout
+from PyQt6.QtWidgets import *
 
-
-start_time = time.time()
-# Starting variables which user will be inputting
-maxMonster = 5
-maxFood = 5
-maxTribes = 5
 
 
 def main():
+    #MENU SETUP
+    app = QApplication(sys.argv)
+    Form = QWidget()
+    menu = ui.MenuLayout.Ui_Form()
+    menu.setupUi(Form)
+    Form.show()
+    app.exec()
+    start_time = time.time() #Moved here to substract menu time from program running time
+
+    #GRABBING USER INPUT VALUES
+    maxMonster = int(menu.MonsterAmnt_prev.text())
+    maxFood = int(menu.StartFood_prev.text())
+    maxTribes = int(menu.TribeAmount_prev.text())
+
     # BOARD INITIALIZING
-    board = models.board(10, 10)
+    board = models.board(int(menu.dimX_prev.text())*5, int(menu.dimY_prev.text())*5)
     tab = board.boardInit()
 
     # BOARD GENERATING
