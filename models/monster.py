@@ -15,3 +15,10 @@ class monster(unitDynamic):
         self.tribe = "None"
         self.job = "monster"
 
+    def deletion(self, tribe, list, tab):
+        tab[self.coy][self.cox] = 0
+        del list[self.id]
+        for monster in range(len(list)):
+            list[monster].id = monster
+            print(list[monster].id)
+        tribe.morale = tribe.morale + 10

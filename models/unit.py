@@ -9,3 +9,6 @@ class unit(ABC):
         self.coy = coy
         self.id = id
 
+    @abstractmethod
+    def deletion(self, tribe, list, tab):
+        pass

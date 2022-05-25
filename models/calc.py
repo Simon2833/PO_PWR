@@ -1,6 +1,5 @@
 import random
 import math
-import models
 
 
 # Class where all the repeated calc functions are grouped up in one place
@@ -37,13 +36,10 @@ class calc:
         return pos
 
     @classmethod
-    def yesOrNo(cls):
+    def yesOrNo(cls, first, second):
         # Help to randomize choosing between two things, for example if tribe is aggressive or not
-        x = random.randint(0, 1)
-        if x == 1:
-            return True
-        else:
-            return False
+        x = [first, second]
+        return random.choice(x)
 
     @classmethod
     def rangeBetween(cls, firstx, firsty, secondx, secondy):
@@ -55,4 +51,3 @@ class calc:
         answer = int(math.sqrt(answer))
 
         return answer
-

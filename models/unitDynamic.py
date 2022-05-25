@@ -54,9 +54,12 @@ class unitDynamic(unit):
                         for villager in villagerlist.populationList:
                             if(ent.cox + x == villager.cox and ent.coy + y == villager.coy):
                                 if(j <= ent.range):
-                                    enemy.append([ent.cox+x, ent.coy+y])
+                                    enemy.append([villager.cox, villager.coy])
                                     print("{} {} attacked {} {} from base {}".format(name, ent.id, villager.job, villager.id, villagerlist.id))
-                                sighted.append([ent.cox+x, ent.coy+y])
+                                    villager.currenthp = villager.currenthp - ent.attack
+                                    if (villager.currenthp <= 0):
+                                        villager.deletion("None", models.villageBase.baseList, tab)
+                                sighted.append([villager.cox, villager.coy])
 
             elif(ent.type == "villager"):
                 if(checked in [4, 5, 6]):
@@ -65,17 +68,38 @@ class unitDynamic(unit):
                             for villager in villagerlist.populationList:
                                 if(ent.cox + x == villager.cox and ent.coy + y == villager.coy):
                                     if(j <= ent.range):
-                                        enemy.append([ent.cox+x, ent.coy+y])
-                                        print("{} {} from base {} attacked {} {} from base {}".format(name, ent.id, ent.tribe, villager.job, villager.id, villagerlist.id))
-                                    sighted.append([ent.cox+x, ent.coy+y])
+                                        enemy.append([villager.cox, villager.coy])
+                                        # print("{} {} from base {} attacked {} {} from base {}".format(name, ent.id, ent.tribe, villager.job, villager.id, villagerlist.id))
+                                        villager.currenthp = villager.currenthp - ent.attack
+                                        if (villager.currenthp <= 0):
+                                            villager.deletion("None", models.villageBase.baseList, tab)
+                                    sighted.append([villager.cox, villager.coy])
 
                 elif(checked == 2):
                     for monsterEnemy in models.monster.monsterList:
                         if(ent.cox + x == monsterEnemy.cox and ent.coy + y == monsterEnemy.coy):
                             if(j <= ent.range):
-                                enemy.append([ent.cox+x, ent.coy+y])
-                                print("{} {} from base {} attacked {} {}".format(name, ent.id, ent.tribe, monsterEnemy.job, monsterEnemy.id))
-                            sighted.append([ent.cox+x, ent.coy+y])
+                                enemy.append([monsterEnemy.cox, monsterEnemy.coy])
+                                # print("{} {} from base {} attacked {} {}".format(name, ent.id, ent.tribe, monsterEnemy.job, monsterEnemy.id))
+                                monsterEnemy.currenthp = monsterEnemy.currenthp - ent.attack
+                                if (monsterEnemy.currenthp <= 0):
+                                    monsterEnemy.deletion(models.villageBase.baseList[ent.tribe], models.monster.monsterList, tab)
+                            sighted.append([monsterEnemy.cox, monsterEnemy.coy])
+                elif(checked == 3):
+                    for base in models.villageBase.baseList:
+                        if(ent.tribe != base.id):
+                            if(ent.cox + x == base.cox and ent.coy + y == base.coy):
+                                if(j <= ent.range):
+                                    enemy.append([base.cox, base.coy])
+                                    # print("{} {} from base {} attacked {} {}".format(name, ent.id, ent.tribe, base.job, base.id))
+                                    base.currenthp = base.currenthp - ent.attack
+                                    if (base.currenthp <= 0):
+                                        base.deletion(models.villageBase.baseList[ent.tribe], models.villageBase.baseList, tab)
+                elif(checked == 1):
+                    if(j <= ent.range):
+                        for food in models.resource.resourceList:
+                            if(ent.cox + x == food.cox and ent.coy + y == food.coy):
+                                food.deletion(models.villageBase.baseList[ent.tribe], models.resource.resourceList, tab)
 
     @classmethod
     def direction(cls, direction, x, y):
@@ -103,4 +127,12 @@ class unitDynamic(unit):
         entity.coy = mPos[1]
         if(name == "monster"):
             tab[mPos[1]][mPos[0]] = 2
+        elif(name == "warrior"):
+            tab[mPos[1]][mPos[0]] = 4
+        elif(name == "spearman"):
+            tab[mPos[1]][mPos[0]] = 5
+        elif(name == "archer"):
+            tab[mPos[1]][mPos[0]] = 6
 
+    def deletion(self, tribe, list, tab):
+        pass
