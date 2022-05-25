@@ -16,56 +16,66 @@ class unitDynamic(unit):
         self.coy = coy
 
     @classmethod
-    def checkRange(cls, tab, entityRange, cox, coy, type, id, tribe, job):
+    def checkRange(cls, tab, ent):
         # In chosen list it checks for every position around(in a circle) given object, according to this object's range
         x = 0
         y = 0
         enemy = []
-        for j in range(1, entityRange+1):
+        sighted = []
+        name = type(ent).__name__
+        for j in range(1, (ent.range*2)+1):
             y = unitDynamic.direction("south", x, y)
             x = unitDynamic.direction("west", x, y)
             for k in range(2*j):
                 y = unitDynamic.direction("north", x, y)
-                unitDynamic.ifInBoard(tab, x, y, cox, coy, type, id, tribe, job, enemy)
+                unitDynamic.ifInBoard(tab, x, y, enemy, ent, name, sighted, j)
             for k in range(2*j):
                 x = unitDynamic.direction("east", x, y)
-                unitDynamic.ifInBoard(tab, x, y, cox, coy, type, id, tribe, job, enemy)
+                unitDynamic.ifInBoard(tab, x, y, enemy, ent, name, sighted, j)
             for k in range(2*j):
                 y = unitDynamic.direction("south", x, y)
-                unitDynamic.ifInBoard(tab, x, y, cox, coy, type, id, tribe, job, enemy)
+                unitDynamic.ifInBoard(tab, x, y, enemy, ent, name, sighted, j)
             for k in range(2*j):
                 x = unitDynamic.direction("west", x, y)
-                unitDynamic.ifInBoard(tab, x, y, cox, coy, type, id, tribe, job, enemy)
-        return enemy
+                unitDynamic.ifInBoard(tab, x, y, enemy, ent, name, sighted, j)
+        return (enemy, sighted)
 
     @classmethod
-    def ifInBoard(cls, tab, x, y, cox, coy, type, id, tribe, job, enemy):
+    def ifInBoard(cls, tab, x, y, enemy, ent, name, sighted, j):
         # Function for possible error if checked position would be outside of board's range
-        if(0 > (cox + x) or (len(tab[1])-1) < (cox + x) or 0 > (coy + y) or (len(tab)-1) < (coy + y)):
+        if(0 > (ent.cox + x) or (len(tab[1])-1) < (ent.cox + x) or 0 > (ent.coy + y) or (len(tab)-1) < (ent.coy + y)):
             pass
         else:
             # Checks if there is villager in monsters range
-            checked = tab[coy + y][cox + x]
-            if(type == "monster"):
+            checked = tab[ent.coy + y][ent.cox + x]
+            if(ent.type == "monster"):
                 if(checked in [4, 5, 6]):
                     for villagerlist in models.villageBase.baseList:
                         for villager in villagerlist.populationList:
-                            if(cox + x == villager.cox and coy + y == villager.coy):
-                                enemy.append([cox+x, coy+y])
-                                print("{} {} attacked {} {} from base {}".format(job, id, villager.job, villager.id, villagerlist.id))
-            elif(type == "villager"):
+                            if(ent.cox + x == villager.cox and ent.coy + y == villager.coy):
+                                if(j <= ent.range):
+                                    enemy.append([ent.cox+x, ent.coy+y])
+                                    print("{} {} attacked {} {} from base {}".format(name, ent.id, villager.job, villager.id, villagerlist.id))
+                                sighted.append([ent.cox+x, ent.coy+y])
+
+            elif(ent.type == "villager"):
                 if(checked in [4, 5, 6]):
                     for villagerlist in models.villageBase.baseList:
-                        if(tribe != villagerlist.id):
+                        if(ent.tribe != villagerlist.id):
                             for villager in villagerlist.populationList:
-                                if(cox + x == villager.cox and coy + y == villager.coy):
-                                    enemy.append([cox+x, coy+y])
-                                    print("{} {} from base {} attacked {} {} from base {}".format(job, id, tribe, villager.job, villager.id, villagerlist.id))
+                                if(ent.cox + x == villager.cox and ent.coy + y == villager.coy):
+                                    if(j <= ent.range):
+                                        enemy.append([ent.cox+x, ent.coy+y])
+                                        print("{} {} from base {} attacked {} {} from base {}".format(name, ent.id, ent.tribe, villager.job, villager.id, villagerlist.id))
+                                    sighted.append([ent.cox+x, ent.coy+y])
+
                 elif(checked == 2):
                     for monsterEnemy in models.monster.monsterList:
-                        if(cox + x == monsterEnemy.cox and coy + y == monsterEnemy.coy):
-                            enemy.append([cox+x, coy+y])
-                            print("{} {} from base {} attacked {} {}".format(job, id, tribe, monsterEnemy.job, monsterEnemy.id))
+                        if(ent.cox + x == monsterEnemy.cox and ent.coy + y == monsterEnemy.coy):
+                            if(j <= ent.range):
+                                enemy.append([ent.cox+x, ent.coy+y])
+                                print("{} {} from base {} attacked {} {}".format(name, ent.id, ent.tribe, monsterEnemy.job, monsterEnemy.id))
+                            sighted.append([ent.cox+x, ent.coy+y])
 
     @classmethod
     def direction(cls, direction, x, y):
@@ -84,4 +94,13 @@ class unitDynamic(unit):
             x = x + 1
             return x
 
+    @classmethod
+    def move(cls, tab, entity):
+        name = type(entity).__name__
+        tab[entity.coy][entity.cox] = 0
+        mPos = models.calc.movePos(tab, entity)
+        entity.cox = mPos[0]
+        entity.coy = mPos[1]
+        if(name == "monster"):
+            tab[mPos[1]][mPos[0]] = 2
 

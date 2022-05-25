@@ -15,6 +15,28 @@ class calc:
         return tab
 
     @classmethod
+    def findMovePos(cls, ent):
+        x = random.randint(ent.cox - ent.range, ent.cox + ent.range)
+        y = random.randint(ent.coy - ent.range, ent.coy + ent.range)
+        pos = [x, y]
+        return pos
+
+    @classmethod
+    def movePos(cls, tab, ent):
+        escape = 0
+        pos = calc.findMovePos(ent)
+        while(0 > pos[0] or (len(tab[1])-1) < pos[0] or 0 > pos[1] or (len(tab)-1) < pos[1]):
+            pos = calc.findMovePos(ent)
+        while(tab[pos[1]][pos[0]] != 0):
+            escape += 1
+            if(escape > 10):
+                return [ent.cox, ent.coy]
+            pos = calc.findMovePos(ent)
+            while(0 > pos[0] or (len(tab[1])-1) < pos[0] or 0 > pos[1] or (len(tab)-1) < pos[1]):
+                pos = calc.findMovePos(ent)
+        return pos
+
+    @classmethod
     def yesOrNo(cls):
         # Help to randomize choosing between two things, for example if tribe is aggressive or not
         x = random.randint(0, 1)
