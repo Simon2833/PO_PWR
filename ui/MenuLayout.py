@@ -262,7 +262,7 @@ class Ui_Form(object):
         self.pushButton = QtWidgets.QPushButton(self.layoutWidget)
         self.pushButton.setObjectName("pushButton")
         self.pushButton.clicked.connect(self.clickedbutton)
-        self.verticalLayout.addWidget(self.pushButton)  
+        self.verticalLayout.addWidget(self.pushButton)
 
         
 
@@ -279,7 +279,7 @@ class Ui_Form(object):
 
     def retranslateUi(self, Form):
         _translate = QtCore.QCoreApplication.translate
-        Form.setWindowTitle(_translate("Form", "Form"))
+        Form.setWindowTitle(_translate("Form", "Menu"))
         self.label_3.setText(_translate("Form", "Board settings"))
         self.label.setText(_translate("Form", "Board Dimension X"))
         self.dimX_prev.setText(_translate("Form", "10"))
