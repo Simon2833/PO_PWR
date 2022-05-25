@@ -7,16 +7,26 @@ from PyQt6.QtWidgets import *
 
 
 def main():
+<<<<<<< HEAD
     # MENU SETUP
+=======
+    #MENU SETUP
+>>>>>>> 9dadaaecc98a3caf7a5272a5f3dc1d8bb2c60667
     app = QApplication(sys.argv)
     Form = QWidget()
     menu = ui.MenuLayout.Ui_Form()
     menu.setupUi(Form)
     Form.show()
     app.exec()
+<<<<<<< HEAD
     start_time = time.time() # Moved here to substract menu time from program running time
 
     # GRABBING USER INPUT VALUES
+=======
+    start_time = time.time() #Moved here to substract menu time from program running time
+
+    #GRABBING USER INPUT VALUES
+>>>>>>> 9dadaaecc98a3caf7a5272a5f3dc1d8bb2c60667
     maxMonster = int(menu.MonsterAmnt_prev.text())
     maxFood = int(menu.StartFood_prev.text())
     maxTribes = int(menu.TribeAmount_prev.text())
