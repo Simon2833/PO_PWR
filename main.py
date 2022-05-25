@@ -28,7 +28,7 @@ def main():
     maxTribes = int(menu.TribeAmount_prev.text())
 
     # BOARD INITIALIZING
-    board = models.board(int(menu.dimX_prev.text())*5, int(menu.dimY_prev.text())*5)
+    board = models.board(int(menu.dimX_prev.text()), int(menu.dimY_prev.text()))
     tab = board.boardInit()
 
     # BOARD GENERATING
