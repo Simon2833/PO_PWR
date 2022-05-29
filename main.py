@@ -25,6 +25,7 @@ def main():
     maxMonster = int(menu.MonsterAmnt_prev.text())
     maxFood = int(menu.StartFood_prev.text())
     maxTribes = int(menu.TribeAmount_prev.text())
+    spawnRate = int(menu.FSpawnRate_prev.text())
 
     # BOARD INITIALIZING
     board = models.board(int(menu.dimX_prev.text()), int(menu.dimY_prev.text()))
@@ -33,7 +34,7 @@ def main():
     # BOARD GENERATING
     tab = board.boardGenerate(tab, maxFood, maxMonster, maxTribes)
 
-    for i in range(0, 3):
+    for i in range(0, 10):
         # BOARD PRINTING
         for y in range(len(tab)):
             print()
@@ -43,20 +44,29 @@ def main():
         print("--- %s seconds ---" % (time.time() - start_time))
         # CHECKING BOARD IN RANGE OF EVERY OBJECT ON THE BOARD and attacking
         for bruh in models.monster.monsterList:
-            enemy, sighted = bruh.checkRange(tab, bruh)
-            # print(enemy, sighted)
+            sighted = bruh.checkRange(tab, bruh)
+            # print(sighted)
         for base in models.villageBase.baseList:
             for bruh in base.populationList:
-                enemy, sighted = bruh.checkRange(tab, bruh)
-                # print(enemy, sighted)
+                sighted = bruh.checkRange(tab, bruh)
+                # print(sighted)
 
         for monster in models.monster.monsterList:
             monster.move(tab, monster)
+
         for list in models.villageBase.baseList:
+            list.moraleReset(tab)
+            print(list.currenthp, list.morale, len(list.populationList))
             for villager in list.populationList:
                 villager.move(tab, villager)
 
         print("--- %s seconds ---" % (time.time() - start_time))
+        if(spawnRate > 0 and i % spawnRate == 0):
+            models.resource.spawnRate(tab)
+        print(len(models.resource.resourceList))
+
+        if(len(models.villageBase.baseList) <= 1):
+            pass  # olaf dokończy koniec gry
 
 
 main()

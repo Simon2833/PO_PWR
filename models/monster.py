@@ -20,5 +20,4 @@ class monster(unitDynamic):
         del list[self.id]
         for monster in range(len(list)):
             list[monster].id = monster
-            print(list[monster].id)
         tribe.morale = tribe.morale + 10
