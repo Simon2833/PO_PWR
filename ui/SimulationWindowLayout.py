@@ -10,7 +10,7 @@ class Ui_Simulation(object):
         Simulation.resize(1080, 820)
         self.graphicsView = QGraphicsView(Simulation)
         self.graphicsView.setObjectName(u"graphicsView")
-        self.graphicsView.setGeometry(QRect(10, 10, 800, 800))
+        self.graphicsView.setGeometry(QRect(10, 10, 792, 792))
         self.label = QLabel(Simulation)
         self.label.setObjectName(u"label")
         self.label.setGeometry(QRect(820, 20, 61, 16))
