@@ -18,7 +18,7 @@ class Ui_Simulation(object):
         Simulation.setObjectName("Simulation")
         Simulation.resize(1080, 820)
         graphicsView = QtWidgets.QGraphicsView(Simulation)
-        graphicsView.setGeometry(QtCore.QRect(10, 10, 792, 792))
+        graphicsView.setGeometry(QtCore.QRect(10, 10, 800, 800))
         graphicsView.setObjectName("graphicsView")
         graphicsView.setVerticalScrollBarPolicy(QtCore.Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
         graphicsView.setHorizontalScrollBarPolicy(QtCore.Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
@@ -117,14 +117,23 @@ class Ui_Simulation(object):
         ############################################################################################################
         print("h")
         starttime = time.time()
-        item = QGraphicsPixmapItem(QPixmap('assets/tileset_Layer 3.png'))
         scene = QGraphicsScene()
         scene.setSceneRect(0, 0, 800, 800)
         graphicsView.setScene(scene)
         temps=[]
-        for x in range(0,99):
-            for y in range(0,99):
-                temps.append(QGraphicsPixmapItem(QPixmap('assets/tileset_Layer 3.png')))
+        h = w = 100
+        for x in range(0,w):
+            for y in range(0,h):
+                if(x == 0):
+                    temps.append(QGraphicsPixmapItem(QPixmap('assets/edge_L.png')))
+                elif(x == w-1):
+                    temps.append(QGraphicsPixmapItem(QPixmap('assets/edge_R.png')))
+                elif(y == 0):
+                    temps.append(QGraphicsPixmapItem(QPixmap('assets/edge_T.png')))
+                elif(y == h-1):
+                    temps.append(QGraphicsPixmapItem(QPixmap('assets/edge_B.png')))
+                else:
+                    temps.append(QGraphicsPixmapItem(QPixmap('assets/land.png')))
                 scene.addItem(temps[len(temps)-1])
                 temps[len(temps)-1].setPos(x*8, y*8)
 

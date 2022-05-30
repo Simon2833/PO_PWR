@@ -18,7 +18,7 @@ def main():
     # Exiting program if start button was not pressed
     if not(menu.condition):
         print("Start button not pressed.\nTerminating Simulation...")
-        time.sleep(1)
+        time.sleep(1) 
         exit()
 
     # GRABBING USER INPUT VALUES
