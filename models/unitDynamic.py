@@ -9,6 +9,7 @@ class unitDynamic(unit):
     def __init__(self, cox, coy, id, maxhp, attack, armor, range):
         super().__init__(cox, coy, id)
         self.maxhp = maxhp
+        self.currenthp = self.maxhp
         self.attack = attack
         self.armor = armor
         self.range = range
@@ -63,11 +64,18 @@ class unitDynamic(unit):
                         if(ent.tribe != villagerlist.id):
                             for villager in villagerlist.populationList:
                                 if(ent.cox + x == villager.cox and ent.coy + y == villager.coy):
-                                    if(j <= ent.range):
+                                    if(j <= ent.range and models.calc.randomChance() < 3 and villagerlist.attitude == models.villageBase.baseList[ent.tribe].attitude == "passive"):
+                                        villagerlist.deletion(models.villageBase.baseList[ent.tribe], models.villageBase.baseList, tab)
+                                    elif(j <= ent.range):
                                         villager.currenthp = villager.currenthp - ent.attack
                                         if (villager.currenthp <= 0):
                                             villager.deletion("None", models.villageBase.baseList, tab)
                                             villagerlist.morale = villagerlist.morale - 10
+                                            villagerlist.status = "war"
+                                            models.villageBase.baseList[ent.tribe].status = "war"
+                                            if(len(villagerlist.populationList) == 0):
+                                                villagerlist.deletion(models.villageBase.baseList[ent.tribe], models.villageBase.baseList, tab)
+
                                     sighted.append([villager.cox, villager.coy])
 
                 elif(checked == 2):
@@ -80,7 +88,7 @@ class unitDynamic(unit):
                             sighted.append([monsterEnemy.cox, monsterEnemy.coy])
                 elif(checked == 3):
                     for base in models.villageBase.baseList:
-                        if(ent.tribe != base.id):
+                        if(ent.tribe != base.id and models.villageBase.baseList[ent.tribe].status == "war"):
                             if(ent.cox + x == base.cox and ent.coy + y == base.coy):
                                 if(j <= ent.range):
                                     base.currenthp = base.currenthp - ent.attack
@@ -127,3 +135,9 @@ class unitDynamic(unit):
 
     def deletion(self, tribe, list, tab):
         pass
+
+    def heal(self):
+        if(self.currenthp < self.maxhp):
+            self.currenthp = self.currenthp + 5
+            if(self.currenthp > self.maxhp):
+                self.currenthp = self.maxhp

@@ -8,7 +8,6 @@ import models
 # Main village base that will delete clan if destroyed
 class villageBase(unitStatic):
 
-    x = calc.yesOrNo("pasive", "aggressive")
     baseList = []
 
     def __init__(self, cox, coy, id, morale=50):
@@ -20,7 +19,7 @@ class villageBase(unitStatic):
         self.population = 3
         self.populationList = []
         self.morale = morale
-        self.attitude = self.x
+        self.attitude = calc.yesOrNo("passive", "aggressive")
         self.job = "base"
 
     def deletion(self, tribe, list, tab):
@@ -51,3 +50,9 @@ class villageBase(unitStatic):
                 case 3:
                     tab[pos[1]][pos[0]] = 6
                     self.populationList.append(models.archer(pos[0], pos[1], len(self.populationList), self.id))
+
+    def heal(self):
+        if(self.currenthp < self.maxhp):
+            self.currenthp = self.currenthp + 5
+            if(self.currenthp > self.maxhp):
+                self.currenthp = self.maxhp

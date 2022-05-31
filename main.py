@@ -43,27 +43,25 @@ def main():
 
         print("--- %s seconds ---" % (time.time() - start_time))
         # CHECKING BOARD IN RANGE OF EVERY OBJECT ON THE BOARD and attacking
-        for bruh in models.monster.monsterList:
-            sighted = bruh.checkRange(tab, bruh)
-            # print(sighted)
-        for base in models.villageBase.baseList:
-            for bruh in base.populationList:
-                sighted = bruh.checkRange(tab, bruh)
-                # print(sighted)
-
         for monster in models.monster.monsterList:
+            sighted = monster.checkRange(tab, monster)
             monster.move(tab, monster)
+            monster.heal()
 
-        for list in models.villageBase.baseList:
-            list.moraleReset(tab)
-            print(list.currenthp, list.morale, len(list.populationList))
-            for villager in list.populationList:
+        for base in models.villageBase.baseList:
+            base.moraleReset(tab)
+            for villager in base.populationList:
+                sighted = villager.checkRange(tab, villager)
                 villager.move(tab, villager)
+                villager.heal()
+            print(base.currenthp, base.morale, len(base.populationList), base.status)
+            base.heal()
+
+                
 
         print("--- %s seconds ---" % (time.time() - start_time))
         if(spawnRate > 0 and i % spawnRate == 0):
             models.resource.spawnRate(tab)
-        print(len(models.resource.resourceList))
 
         if(len(models.villageBase.baseList) <= 1):
             pass  # olaf dokończy koniec gry

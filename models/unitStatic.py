@@ -10,3 +10,6 @@ class unitStatic(unit):
 
     def deletion(self, tribe, list, tab):
         pass
+
+    def heal(self):
+    	pass

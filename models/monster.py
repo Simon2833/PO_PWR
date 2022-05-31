@@ -9,7 +9,6 @@ class monster(unitDynamic):
 
     def __init__(self, cox, coy, id, loot="bussinLoot", maxhp=100, attack=10, armor=10, range=1):
         super().__init__(cox, coy, id, maxhp, attack, armor, range)
-        self.currenthp = maxhp
         self.loot = loot
         self.type = "monster"
         self.tribe = "None"

@@ -12,3 +12,7 @@ class unit(ABC):
     @abstractmethod
     def deletion(self, tribe, list, tab):
         pass
+
+    @abstractmethod
+    def heal(self):
+    	pass

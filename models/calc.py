@@ -6,6 +6,11 @@ import math
 class calc:
 
     @classmethod
+    def randomChance(cls):
+        chance = random.randint(1, 100)
+        return chance
+
+    @classmethod
     def randomPos(cls, x, y):
         # Will be used to get coordinates of objects before creating for simplicity if current place would be occupied
         x = random.randint(0, x-1)
