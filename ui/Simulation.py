@@ -9,6 +9,8 @@ from PyQt6.QtCore import *
 from PyQt6.QtWidgets import *
 from PyQt6.QtGui import *
 from PyQt6.QtOpenGL import *
+from PyQt6 import *
+from PyQt6.QtGui import QPainter, QColor, QBrush
 import time
 import copy
 
@@ -24,6 +26,7 @@ class Ui_Simulation(object):
         graphicsView.setHorizontalScrollBarPolicy(QtCore.Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
         self.label = QtWidgets.QLabel(Simulation)
         self.label.setGeometry(QtCore.QRect(820, 20, 61, 16))
+        colors=[Qt.GlobalColor.white, Qt.GlobalColor.black, Qt.GlobalColor.cyan, Qt.GlobalColor.darkCyan, Qt.GlobalColor.red, Qt.GlobalColor.darkRed, Qt.GlobalColor.magenta, Qt.GlobalColor.darkMagenta, Qt.GlobalColor.green, Qt.GlobalColor.darkGreen, Qt.GlobalColor.yellow, Qt.GlobalColor.darkYellow, Qt.GlobalColor.blue, Qt.GlobalColor.darkBlue, Qt.GlobalColor.gray, Qt.GlobalColor.darkGray, Qt.GlobalColor.lightGray] 
         font = QtGui.QFont()
         font.setPointSize(14)
         font.setBold(False)
@@ -120,24 +123,26 @@ class Ui_Simulation(object):
         scene = QGraphicsScene()
         scene.setSceneRect(0, 0, 800, 800)
         graphicsView.setScene(scene)
-        temps=[]
-        h = w = 100
+        bgtemps=[]
+        h = w = 50
         for x in range(0,w):
             for y in range(0,h):
                 if(x == 0):
-                    temps.append(QGraphicsPixmapItem(QPixmap('assets/edge_L.png')))
+                    bgtemps.append(QGraphicsPixmapItem(QPixmap('assets/edge_L.png')))
                 elif(x == w-1):
-                    temps.append(QGraphicsPixmapItem(QPixmap('assets/edge_R.png')))
+                    bgtemps.append(QGraphicsPixmapItem(QPixmap('assets/edge_R.png')))
                 elif(y == 0):
-                    temps.append(QGraphicsPixmapItem(QPixmap('assets/edge_T.png')))
+                    bgtemps.append(QGraphicsPixmapItem(QPixmap('assets/edge_T.png')))
                 elif(y == h-1):
-                    temps.append(QGraphicsPixmapItem(QPixmap('assets/edge_B.png')))
+                    bgtemps.append(QGraphicsPixmapItem(QPixmap('assets/edge_B.png')))
                 else:
-                    temps.append(QGraphicsPixmapItem(QPixmap('assets/land.png')))
-                scene.addItem(temps[len(temps)-1])
-                temps[len(temps)-1].setPos(x*8, y*8)
+                    bgtemps.append(QGraphicsPixmapItem(QPixmap('assets/land.png')))
+                scene.addItem(bgtemps[len(bgtemps)-1])
+                bgtemps[len(bgtemps)-1].setPos(x*8, y*8)
 
-
+        brush = QBrush(colors[1], Qt.BrushStyle.SolidPattern)
+        basestemps = [] #bruh jak tu dodac obiekt kwadratu(z kolorami)
+        scene.addRect(QRectF((h-1)*8-4,(w-1)*8-4, 10,10),QPen(),brush)        
 
 
         
