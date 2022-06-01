@@ -20,7 +20,7 @@ class resource(unitStatic):
 
     @classmethod
     def spawnRate(cls, tab):
-        pos = models.calc.randomPos(len(tab), len(tab[0]))
+        pos = models.calc.randomPos(len(tab[0]), len(tab))
         while(tab[pos[1]][pos[0]] not in [1, 2, 3, 4, 5, 6]):
-            pos = models.calc.randomPos(len(tab), len(tab[0]))
+            pos = models.calc.randomPos(len(tab[0]), len(tab))
         resource.resourceList.append(resource(pos[0], pos[1], len(resource.resourceList)))

@@ -61,7 +61,7 @@ def main():
     # BOARD GENERATING
     tab = board.boardGenerate(tab, maxFood, maxMonster, maxTribes, initialpopulation)
 
-    for i in range(0, 10):
+    for i in range(0, 2):
         # BOARD PRINTING
         for y in range(len(tab)):
             print()

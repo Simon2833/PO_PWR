@@ -152,6 +152,7 @@ class Ui_Simulation(object):
     def Simulate(self):
         colors=[Qt.GlobalColor.white, Qt.GlobalColor.black, Qt.GlobalColor.cyan, Qt.GlobalColor.darkCyan, Qt.GlobalColor.red, Qt.GlobalColor.darkRed, Qt.GlobalColor.magenta, Qt.GlobalColor.darkMagenta, Qt.GlobalColor.green, Qt.GlobalColor.darkGreen, Qt.GlobalColor.yellow, Qt.GlobalColor.darkYellow, Qt.GlobalColor.blue, Qt.GlobalColor.darkBlue, Qt.GlobalColor.gray, Qt.GlobalColor.darkGray, Qt.GlobalColor.lightGray] 
         startData = self.arr
+        self.PauseButton.setText("Pause/Continue")
         starttime = time.time()
         self.scene = QGraphicsScene()
         self.scene.setSceneRect(0, 0, 800, 800)
@@ -165,7 +166,8 @@ class Ui_Simulation(object):
 
 
         bgtemps=[]
-        h = w = 100
+        h = startData[-1]
+        w = startData[-2]
         for x in range(0,w):
             for y in range(0,h):
                 if(x == 0):
@@ -181,14 +183,66 @@ class Ui_Simulation(object):
                 self.scene.addItem(bgtemps[len(bgtemps)-1])
                 bgtemps[len(bgtemps)-1].setPos(x*8, y*8)
 
+        print(time.time() - starttime)
 
 
-        brush = QBrush(colors[1], Qt.BrushStyle.SolidPattern)
-        basestemps = [] #bruh jak tu dodac obiekt kwadratu(z kolorami)
-        self.scene.addRect(QRectF((h-1)*8-4,(w-1)*8-4, 10,10),QPen(),brush)
+        
+
+
+            # BOARD INITIALIZING
+        board = models.board(w, h)
+        tab = board.boardInit()
+
+        # BOARD GENERATING
+        tab = board.boardGenerate(tab, startData[1], startData[0], startData[2], startData[4])
+
+        for i in range(0, 10):
+            # BOARD PRINTING
+            # for y in range(len(tab)):
+            #     print()
+            #     for x in range(len(tab[y])):
+            #         print(tab[y][x], end="|")
+            print()
+
+
+            # CHECKING BOARD IN RANGE OF EVERY OBJECT ON THE BOARD and attacking
+            for monster in models.monster.monsterList:
+                sighted = monster.checkRange(tab, monster)
+                monster.move(tab, monster)
+                monster.heal()
+
+            for base in models.villageBase.baseList:
+                base.moraleUpdate("None", models.villageBase.baseList, tab)
+                for villager in base.populationList:
+                    sighted = villager.checkRange(tab, villager)
+                    villager.move(tab, villager)
+                    villager.heal()
+                base.heal()
+
+            for base in models.villageBase.baseList:
+                print(base.currenthp, base.morale, len(base.populationList), base.status)
+
+
+            if(startData[3] > 0 and i % startData[3] == 0):
+                models.resource.spawnRate(tab)
+
+            if(len(models.villageBase.baseList) <= 1):
+                pass  # olaf dokończy koniec gry
+
+
+
+
+
+        for base in models.villageBase.baseList:
+            brush = QBrush(colors[base.id], Qt.BrushStyle.SolidPattern)
+            self.scene.addRect(QRectF((base.cox)*8,(base.coy)*8, 8,8),QPen(),brush) 
+        #trzeba zrobic bgtemps liste i dodawac QGraphicsRectItem zeby byylo szybciej i latwiej z dostepem do obietkow pozniej           
+        
+
+
 
         self.graphicsView.show()
-        print(time.time() - starttime)
+
 
 
 
