@@ -9,11 +9,12 @@ class archer(unitDynamic):
         super().__init__(cox, coy, id, maxhp, attack, armor, range)
         self.tribe = tribe
         self.type = "villager"
-        self.job = "archer"
 
     def deletion(self, tribe, list, tab):
         tab[self.coy][self.cox] = 0
         del list[self.tribe].populationList[self.id]
         for villager in range(len(list[self.tribe].populationList)):
             list[self.tribe].populationList[villager].id = villager
+
+    
 

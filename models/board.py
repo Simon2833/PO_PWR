@@ -35,7 +35,7 @@ class board:
                 monsterCount += 1
 
     # Function generates random coordinates and if the spot is empty makes new villageBase object in tribe list with those coordinates
-    def tribeGenerate(self, tab, maxTribes):
+    def tribeGenerate(self, tab, maxTribes, initialpopulation):
         tribeCount = 0
         while (tribeCount != maxTribes):
             pos = models.calc.randomPos(self.cox, self.coy)
@@ -43,7 +43,7 @@ class board:
                 pos = self.isNext(pos, tribeCount)
             if (tab[pos[1]][pos[0]] not in [1, 2, 3, 4, 5, 6]):
                 tab[pos[1]][pos[0]] = 3
-                models.villageBase.baseList.append(models.villageBase(pos[0], pos[1], len(models.villageBase.baseList)))
+                models.villageBase.baseList.append(models.villageBase(pos[0], pos[1], len(models.villageBase.baseList), initialpopulation))
                 self.villagersGenerate(tab, models.villageBase.baseList[tribeCount].population, tribeCount, pos[0], pos[1])
                 tribeCount += 1
 
@@ -90,8 +90,8 @@ class board:
         return pos
 
     # All the starting objects are generated on the previously empty board
-    def boardGenerate(self, tab, maxFood, maxMonster, maxTribes):
-        self.tribeGenerate(tab, maxTribes)
+    def boardGenerate(self, tab, maxFood, maxMonster, maxTribes, initialpopulation):
+        self.tribeGenerate(tab, maxTribes, initialpopulation)
         self.foodGenerate(tab, maxFood)
         self.monsterGenerate(tab, maxMonster)
         for y in range(len(tab)):

@@ -12,7 +12,6 @@ class monster(unitDynamic):
         self.loot = loot
         self.type = "monster"
         self.tribe = "None"
-        self.job = "monster"
 
     def deletion(self, tribe, list, tab):
         tab[self.coy][self.cox] = 0

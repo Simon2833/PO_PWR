@@ -10,17 +10,15 @@ class villageBase(unitStatic):
 
     baseList = []
 
-    def __init__(self, cox, coy, id, morale=50):
+    def __init__(self, cox, coy, id, initialpopulation, morale=50):
         super().__init__(cox, coy, id)
-        self.food = 50
         self.status = "peace"
         self.maxhp = 100
         self.currenthp = 100
-        self.population = 3
+        self.population = initialpopulation
         self.populationList = []
         self.morale = morale
         self.attitude = calc.yesOrNo("passive", "aggressive")
-        self.job = "base"
 
     def deletion(self, tribe, list, tab):
         for villager in self.populationList:
@@ -33,7 +31,7 @@ class villageBase(unitStatic):
             for villager in list[base].populationList:
                 villager.tribe = list[base].id
 
-    def moraleReset(self, tab):
+    def moraleUpdate(self, tribe, list, tab):
         if(self.morale >= 100):
             self.morale = 50
             vil = random.randint(1, 3)
@@ -50,6 +48,10 @@ class villageBase(unitStatic):
                 case 3:
                     tab[pos[1]][pos[0]] = 6
                     self.populationList.append(models.archer(pos[0], pos[1], len(self.populationList), self.id))
+        elif(self.morale <= 20):
+            self.morale = 50
+            self.populationList[0].deletion(tribe, list, tab)
+        self.morale = self.morale - 1
 
     def heal(self):
         if(self.currenthp < self.maxhp):

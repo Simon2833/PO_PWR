@@ -8,7 +8,6 @@ class warrior(unitDynamic):
         super().__init__(cox, coy, id, maxhp, attack, armor, range)
         self.tribe = tribe
         self.type = "villager"
-        self.job = "warrior"
 
     def deletion(self, tribe, list, tab):
         tab[self.coy][self.cox] = 0

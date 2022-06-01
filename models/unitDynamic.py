@@ -64,7 +64,9 @@ class unitDynamic(unit):
                         if(ent.tribe != villagerlist.id):
                             for villager in villagerlist.populationList:
                                 if(ent.cox + x == villager.cox and ent.coy + y == villager.coy):
-                                    if(j <= ent.range and models.calc.randomChance() < 3 and villagerlist.attitude == models.villageBase.baseList[ent.tribe].attitude == "passive"):
+                                    if(j <= ent.range and models.calc.randomChance() < 4 and villagerlist.attitude == models.villageBase.baseList[ent.tribe].attitude == "passive"):
+                                        if(villagerlist.status == "war"):
+                                            models.villageBase.baseList[ent.tribe].status = "war"
                                         villagerlist.deletion(models.villageBase.baseList[ent.tribe], models.villageBase.baseList, tab)
                                     elif(j <= ent.range):
                                         villager.currenthp = villager.currenthp - ent.attack
@@ -88,7 +90,7 @@ class unitDynamic(unit):
                             sighted.append([monsterEnemy.cox, monsterEnemy.coy])
                 elif(checked == 3):
                     for base in models.villageBase.baseList:
-                        if(ent.tribe != base.id and models.villageBase.baseList[ent.tribe].status == "war"):
+                        if(ent.tribe != base.id and models.villageBase.baseList[ent.tribe].status == "war" and base.status == "war"):
                             if(ent.cox + x == base.cox and ent.coy + y == base.coy):
                                 if(j <= ent.range):
                                     base.currenthp = base.currenthp - ent.attack
