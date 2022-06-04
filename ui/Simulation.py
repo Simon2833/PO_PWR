@@ -1,4 +1,4 @@
-from PyQt6 import QtCore, QtGui, QtWidgets
+from PyQt6 import QtCore, QtGui, QtWidgets, QtTest
 from PyQt6.QtCore import *
 from PyQt6.QtWidgets import *
 from PyQt6.QtGui import *
@@ -11,11 +11,19 @@ import models
 
 class Ui_Simulation(object):
     def clickedbutton(self):
+        self.exitCondition = True
         self.app.closeAllWindows()
+
+    def Pause(self):
+        pass
+        #to be implemented
+
 
     def setupUi(self, Simulation, array):
         Simulation.setObjectName("Simulation")
         Simulation.resize(1080, 820)
+        self.exitCondition = False
+        self.pauseCondition = False
         self.arr = array
         self.graphicsView = QtWidgets.QGraphicsView(Simulation)
         self.graphicsView.setGeometry(QtCore.QRect(10, 10, 800, 800))
@@ -85,13 +93,14 @@ class Ui_Simulation(object):
         self.populationCount.setGeometry(QtCore.QRect(1010, 120, 21, 16))
         font = QtGui.QFont()
         font.setPointSize(11)
-        self.populationCount.setFont(font)
-        self.populationCount.setObjectName("populationCount")
         self.simSpeedSlider = QtWidgets.QSlider(Simulation)
         self.simSpeedSlider.setGeometry(QtCore.QRect(920, 670, 151, 22))
         self.simSpeedSlider.setCursor(QtGui.QCursor(QtCore.Qt.CursorShape.SizeHorCursor))
         self.simSpeedSlider.setOrientation(QtCore.Qt.Orientation.Horizontal)
         self.simSpeedSlider.setObjectName("simSpeedSlider")
+        self.simSpeedSlider.setMinimum(1)
+        self.simSpeedSlider.setMaximum(1000)
+        self.simSpeedSlider.setInvertedAppearance(True)
         self.label_11 = QtWidgets.QLabel(Simulation)
         self.label_11.setGeometry(QtCore.QRect(820, 670, 101, 16))
         self.label_11.setObjectName("label_11")
@@ -138,18 +147,17 @@ class Ui_Simulation(object):
         self.foodCount.setText(_translate("Simulation", "0"))
         self.label_7.setText(_translate("Simulation", "Current Tribes:"))
         self.tribeCount.setText(_translate("Simulation", "0"))
-        self.label_9.setText(_translate("Simulation", "Current Population (Global):"))
-        self.populationCount.setText(_translate("Simulation", "0"))
         self.label_11.setText(_translate("Simulation", "Simulation Speed"))
         self.PauseButton.setText(_translate("Simulation", "Start"))
         # self.PauseButton.setText(_translate("Simulation", "Pause/Continue"))
         self.EndButton.setText(_translate("Simulation", "End"))
 
     def Simulate(self):
-
+        #self.PauseButton.clicked.connect(self.Pause)
         colors=[Qt.GlobalColor.cyan, Qt.GlobalColor.darkCyan, Qt.GlobalColor.white, Qt.GlobalColor.darkRed, Qt.GlobalColor.magenta, Qt.GlobalColor.darkMagenta, Qt.GlobalColor.green, Qt.GlobalColor.darkGreen, Qt.GlobalColor.yellow, Qt.GlobalColor.darkYellow, Qt.GlobalColor.blue, Qt.GlobalColor.darkBlue, Qt.GlobalColor.gray, Qt.GlobalColor.darkGray, Qt.GlobalColor.lightGray] 
         startData = self.arr
-        self.PauseButton.setText("Pause/Continue")
+        self.PauseButton.setEnabled(False)
+        self.PauseButton.setText("Pause (to be implemented)")
         starttime = time.time()
         self.scene = QGraphicsScene()
         self.scene.setSceneRect(0, 0, 800, 800)
@@ -189,11 +197,16 @@ class Ui_Simulation(object):
         tab = board.boardGenerate(tab, startData[1], startData[0], startData[2], startData[4])
 
         roundCount = 0
-        while (roundCount<100):
+        while (len(models.villageBase.baseList)) != 1 and self.exitCondition == False:
             roundCount+=1
-            
-            time.sleep(0.3)
+            self.roundCount.setText(str(roundCount))
+            self.monsterCount.setText(str(len(models.monster.monsterList)))
+            self.tribeCount.setText(str(len(models.villageBase.baseList)))
+            self.foodCount.setText(str(len(models.resource.resourceList)))
 
+            #time.sleep(1/(w+h)+self.simSpeedSlider.value()/1000)
+            #print(str(1/(w+h)))
+            #QtTest.QTest.qWait(int(1000/(w+h)+self.simSpeedSlider.value()))
 
 
             # CHECKING BOARD IN RANGE OF EVERY OBJECT ON THE BOARD and attacking
@@ -237,16 +250,27 @@ class Ui_Simulation(object):
                     self.scene.addItem(bgtemps[len(bgtemps)-1])
                     bgtemps[len(bgtemps)-1].setPos(x*8, y*8)
 
-
+            pen = QPen()
+            pen.setWidthF(0.001)
             brush = QBrush(Qt.GlobalColor.black, Qt.BrushStyle.SolidPattern)
             for monster in models.monster.monsterList:
-                self.scene.addRect(QRectF((monster.cox)*8,(monster.coy)*8, 8,8),QPen(),brush)
+                self.scene.addRect(QRectF((monster.cox)*8,(monster.coy)*8, 8,8),pen,brush)
                 
 
 
-            brush = QBrush(Qt.GlobalColor.red, Qt.BrushStyle.SolidPattern)
+            brush = QBrush(Qt.GlobalColor.red, Qt.BrushStyle.Dense2Pattern)
             for resource in models.resource.resourceList:
-                self.scene.addRect(QRectF((resource.cox)*8,(resource.coy)*8, 8,8),QPen(),brush)
+                self.scene.addRect(QRectF((resource.cox)*8,(resource.coy)*8, 8,8),pen,brush)
+
+
+            for base in models.villageBase.baseList:
+                brush = QBrush(colors[base.id], Qt.BrushStyle.SolidPattern)
+                for villager in base.populationList:
+                    self.scene.addRect(QRectF((villager.cox)*8,(villager.coy)*8, 8,8),pen,brush)
+
+
+
+
 
 
 
@@ -258,10 +282,13 @@ class Ui_Simulation(object):
             self.app.processEvents()
             self.scene.update()
             self.graphicsView.show()
-            
 
             if(len(models.villageBase.baseList) <= 1):
                 return
+            QtTest.QTest.qWait(int(1000/(w+h)+self.simSpeedSlider.value()))
+
+            
+
             self.scene.clear()
 
 
