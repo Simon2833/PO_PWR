@@ -160,7 +160,7 @@ class Ui_Simulation(object):
         edgeB = QPixmap(QImage('ui/assets/edge_B.png'))
         edgeR = QPixmap(QImage('ui/assets/edge_R.png'))
         land = QPixmap(QImage('ui/assets/land.png'))
-
+        itemcounter = 0
         bgtemps = []
         h = startData[-1]
         w = startData[-2]
@@ -189,9 +189,11 @@ class Ui_Simulation(object):
         tab = board.boardGenerate(tab, startData[1], startData[0], startData[2], startData[4])
 
         roundCount = 0
-        while (roundCount<10):
+        while (roundCount<100):
             roundCount+=1
-            time.sleep(1)
+            
+            time.sleep(0.3)
+
 
 
             # CHECKING BOARD IN RANGE OF EVERY OBJECT ON THE BOARD and attacking
@@ -210,31 +212,57 @@ class Ui_Simulation(object):
 
             for base in models.villageBase.baseList:
                 print(base.currenthp, base.morale, len(base.populationList), base.status)
+            print()
 
 
             if(startData[3] > 0 and roundCount % startData[3] == 0):
                 models.resource.spawnRate(tab)
 
-            if(len(models.villageBase.baseList) <= 1):
-                pass  # olaf dokończy koniec gry
+
+
+#################################### VVVVVVVVV RENDERING VVVVVVVV ################################### 
+
+            for x in range(0, w):
+                for y in range(0, h):
+                    if(x == 0):
+                        bgtemps.append(QGraphicsPixmapItem(edgeL))
+                    elif(x == w-1):
+                        bgtemps.append(QGraphicsPixmapItem(edgeR))
+                    elif(y == 0):
+                        bgtemps.append(QGraphicsPixmapItem(edgeT))
+                    elif(y == h-1):
+                        bgtemps.append(QGraphicsPixmapItem(edgeB))
+                    else:
+                        bgtemps.append(QGraphicsPixmapItem(land))
+                    self.scene.addItem(bgtemps[len(bgtemps)-1])
+                    bgtemps[len(bgtemps)-1].setPos(x*8, y*8)
 
 
             brush = QBrush(Qt.GlobalColor.black, Qt.BrushStyle.SolidPattern)
             for monster in models.monster.monsterList:
                 self.scene.addRect(QRectF((monster.cox)*8,(monster.coy)*8, 8,8),QPen(),brush)
+                
+
 
             brush = QBrush(Qt.GlobalColor.red, Qt.BrushStyle.SolidPattern)
             for resource in models.resource.resourceList:
                 self.scene.addRect(QRectF((resource.cox)*8,(resource.coy)*8, 8,8),QPen(),brush)
 
 
+
             for base in models.villageBase.baseList:
                 brush = QBrush(colors[base.id], Qt.BrushStyle.SolidPattern)
                 self.scene.addRect(QRectF((base.cox)*8,(base.coy)*8, 8,8),QPen(),brush) 
 
+
             self.app.processEvents()
             self.scene.update()
             self.graphicsView.show()
+            
+
+            if(len(models.villageBase.baseList) <= 1):
+                return
+            self.scene.clear()
 
 
 
