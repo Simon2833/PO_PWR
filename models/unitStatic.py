@@ -1,4 +1,3 @@
-from abc import abstractmethod
 from models.unit import unit
 
 
@@ -12,4 +11,4 @@ class unitStatic(unit):
         pass
 
     def heal(self):
-    	pass
+        pass

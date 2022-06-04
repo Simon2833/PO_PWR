@@ -1,4 +1,3 @@
-from abc import abstractmethod
 from models.unit import unit
 import models
 
@@ -64,7 +63,7 @@ class unitDynamic(unit):
                         if(ent.tribe != villagerlist.id):
                             for villager in villagerlist.populationList:
                                 if(ent.cox + x == villager.cox and ent.coy + y == villager.coy):
-                                    if(j <= ent.range and models.calc.randomChance() < 4 and villagerlist.attitude == models.villageBase.baseList[ent.tribe].attitude == "passive"):
+                                    if(j <= ent.range and models.calc.randomChance() < 2 and villagerlist.attitude == models.villageBase.baseList[ent.tribe].attitude == "passive"):
                                         if(villagerlist.status == "war"):
                                             models.villageBase.baseList[ent.tribe].status = "war"
                                         villagerlist.deletion(models.villageBase.baseList[ent.tribe], models.villageBase.baseList, tab)
@@ -128,12 +127,16 @@ class unitDynamic(unit):
         entity.coy = mPos[1]
         if(name == "monster"):
             tab[mPos[1]][mPos[0]] = 2
+            return
         elif(name == "warrior"):
             tab[mPos[1]][mPos[0]] = 4
+            return
         elif(name == "spearman"):
             tab[mPos[1]][mPos[0]] = 5
+            return
         elif(name == "archer"):
             tab[mPos[1]][mPos[0]] = 6
+            return
 
     def deletion(self, tribe, list, tab):
         pass

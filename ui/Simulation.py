@@ -2,15 +2,11 @@ from PyQt6 import QtCore, QtGui, QtWidgets
 from PyQt6.QtCore import *
 from PyQt6.QtWidgets import *
 from PyQt6.QtGui import *
-from PyQt6.QtOpenGL import *
-from PyQt6 import *
-from PyQt6.QtGui import QPainter, QColor, QBrush
+from PyQt6.QtGui import QBrush
 import time
-import copy
 import sys
 sys.path.append('../')
 import models
-
 
 
 class Ui_Simulation(object):
@@ -29,7 +25,7 @@ class Ui_Simulation(object):
         self.graphicsView.setHorizontalScrollBarPolicy(QtCore.Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
         self.label = QtWidgets.QLabel(Simulation)
         self.label.setGeometry(QtCore.QRect(820, 20, 61, 16))
-        colors=[Qt.GlobalColor.white, Qt.GlobalColor.black, Qt.GlobalColor.cyan, Qt.GlobalColor.darkCyan, Qt.GlobalColor.red, Qt.GlobalColor.darkRed, Qt.GlobalColor.magenta, Qt.GlobalColor.darkMagenta, Qt.GlobalColor.green, Qt.GlobalColor.darkGreen, Qt.GlobalColor.yellow, Qt.GlobalColor.darkYellow, Qt.GlobalColor.blue, Qt.GlobalColor.darkBlue, Qt.GlobalColor.gray, Qt.GlobalColor.darkGray, Qt.GlobalColor.lightGray] 
+        colors = [Qt.GlobalColor.white, Qt.GlobalColor.black, Qt.GlobalColor.cyan, Qt.GlobalColor.darkCyan, Qt.GlobalColor.red, Qt.GlobalColor.darkRed, Qt.GlobalColor.magenta, Qt.GlobalColor.darkMagenta, Qt.GlobalColor.green, Qt.GlobalColor.darkGreen, Qt.GlobalColor.yellow, Qt.GlobalColor.darkYellow, Qt.GlobalColor.blue, Qt.GlobalColor.darkBlue, Qt.GlobalColor.gray, Qt.GlobalColor.darkGray, Qt.GlobalColor.lightGray]
         font = QtGui.QFont()
         font.setPointSize(14)
         font.setBold(False)
@@ -146,11 +142,11 @@ class Ui_Simulation(object):
         self.populationCount.setText(_translate("Simulation", "0"))
         self.label_11.setText(_translate("Simulation", "Simulation Speed"))
         self.PauseButton.setText(_translate("Simulation", "Start"))
-        #self.PauseButton.setText(_translate("Simulation", "Pause/Continue"))
+        # self.PauseButton.setText(_translate("Simulation", "Pause/Continue"))
         self.EndButton.setText(_translate("Simulation", "End"))
 
     def Simulate(self):
-        colors=[Qt.GlobalColor.white, Qt.GlobalColor.black, Qt.GlobalColor.cyan, Qt.GlobalColor.darkCyan, Qt.GlobalColor.red, Qt.GlobalColor.darkRed, Qt.GlobalColor.magenta, Qt.GlobalColor.darkMagenta, Qt.GlobalColor.green, Qt.GlobalColor.darkGreen, Qt.GlobalColor.yellow, Qt.GlobalColor.darkYellow, Qt.GlobalColor.blue, Qt.GlobalColor.darkBlue, Qt.GlobalColor.gray, Qt.GlobalColor.darkGray, Qt.GlobalColor.lightGray] 
+        colors = [Qt.GlobalColor.white, Qt.GlobalColor.black, Qt.GlobalColor.cyan, Qt.GlobalColor.darkCyan, Qt.GlobalColor.red, Qt.GlobalColor.darkRed, Qt.GlobalColor.magenta, Qt.GlobalColor.darkMagenta, Qt.GlobalColor.green, Qt.GlobalColor.darkGreen, Qt.GlobalColor.yellow, Qt.GlobalColor.darkYellow, Qt.GlobalColor.blue, Qt.GlobalColor.darkBlue, Qt.GlobalColor.gray, Qt.GlobalColor.darkGray, Qt.GlobalColor.lightGray]
         startData = self.arr
         self.PauseButton.setText("Pause/Continue")
         starttime = time.time()
@@ -164,12 +160,11 @@ class Ui_Simulation(object):
         edgeR = QPixmap(QImage('ui/assets/edge_R.png'))
         land = QPixmap(QImage('ui/assets/land.png'))
 
-
-        bgtemps=[]
+        bgtemps = []
         h = startData[-1]
         w = startData[-2]
-        for x in range(0,w):
-            for y in range(0,h):
+        for x in range(0, w):
+            for y in range(0, h):
                 if(x == 0):
                     bgtemps.append(QGraphicsPixmapItem(edgeL))
                 elif(x == w-1):
@@ -185,11 +180,7 @@ class Ui_Simulation(object):
 
         print(time.time() - starttime)
 
-
-        
-
-
-            # BOARD INITIALIZING
+        # BOARD INITIALIZING
         board = models.board(w, h)
         tab = board.boardInit()
 
@@ -197,14 +188,6 @@ class Ui_Simulation(object):
         tab = board.boardGenerate(tab, startData[1], startData[0], startData[2], startData[4])
 
         for i in range(0, 10):
-            # BOARD PRINTING
-            # for y in range(len(tab)):
-            #     print()
-            #     for x in range(len(tab[y])):
-            #         print(tab[y][x], end="|")
-            print()
-
-
             # CHECKING BOARD IN RANGE OF EVERY OBJECT ON THE BOARD and attacking
             for monster in models.monster.monsterList:
                 sighted = monster.checkRange(tab, monster)
@@ -221,33 +204,19 @@ class Ui_Simulation(object):
 
             for base in models.villageBase.baseList:
                 print(base.currenthp, base.morale, len(base.populationList), base.status)
-
-
+            print()
             if(startData[3] > 0 and i % startData[3] == 0):
                 models.resource.spawnRate(tab)
 
             if(len(models.villageBase.baseList) <= 1):
                 pass  # olaf dokończy koniec gry
 
-
-
-
-
         for base in models.villageBase.baseList:
             brush = QBrush(colors[base.id], Qt.BrushStyle.SolidPattern)
-            self.scene.addRect(QRectF((base.cox)*8,(base.coy)*8, 8,8),QPen(),brush) 
-        #trzeba zrobic bgtemps liste i dodawac QGraphicsRectItem zeby byylo szybciej i latwiej z dostepem do obietkow pozniej           
-        
-
-
+            self.scene.addRect(QRectF((base.cox)*8, (base.coy)*8, 8, 8), QPen(), brush)
+        # trzeba zrobic bgtemps liste i dodawac QGraphicsRectItem zeby bylo szybciej i latwiej z dostepem do obietkow pozniej
 
         self.graphicsView.show()
-
-
-
-
-
-
 
 
 if __name__ == "__main__":
@@ -259,4 +228,3 @@ if __name__ == "__main__":
     ui.setupUi(Form, array)
     Form.show()
     sys.exit(app.exec())
-
