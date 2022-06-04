@@ -50,6 +50,8 @@ class villageBase(unitStatic):
                     self.populationList.append(models.archer(pos[0], pos[1], len(self.populationList), self.id))
         elif(self.morale <= 20):
             self.morale = 50
+            if(len(self.populationList) == 0):
+                return
             self.populationList[0].deletion(tribe, list, tab)
         self.morale = self.morale - 1
 

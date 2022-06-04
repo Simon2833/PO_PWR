@@ -11,8 +11,7 @@ import models
 
 class Ui_Simulation(object):
     def clickedbutton(self):
-        app = QApplication.instance()
-        app.closeAllWindows()
+        self.app.closeAllWindows()
 
     def setupUi(self, Simulation, array):
         Simulation.setObjectName("Simulation")
@@ -31,6 +30,7 @@ class Ui_Simulation(object):
         font.setBold(False)
         font.setItalic(False)
         self.label.setFont(font)
+        self.app = QApplication.instance()
         self.label.setStyleSheet("font: 14pt \"Segoe UI\";")
         self.label.setObjectName("label")
         self.roundCount = QtWidgets.QLabel(Simulation)
@@ -146,7 +146,8 @@ class Ui_Simulation(object):
         self.EndButton.setText(_translate("Simulation", "End"))
 
     def Simulate(self):
-        colors = [Qt.GlobalColor.white, Qt.GlobalColor.black, Qt.GlobalColor.cyan, Qt.GlobalColor.darkCyan, Qt.GlobalColor.red, Qt.GlobalColor.darkRed, Qt.GlobalColor.magenta, Qt.GlobalColor.darkMagenta, Qt.GlobalColor.green, Qt.GlobalColor.darkGreen, Qt.GlobalColor.yellow, Qt.GlobalColor.darkYellow, Qt.GlobalColor.blue, Qt.GlobalColor.darkBlue, Qt.GlobalColor.gray, Qt.GlobalColor.darkGray, Qt.GlobalColor.lightGray]
+
+        colors=[Qt.GlobalColor.cyan, Qt.GlobalColor.darkCyan, Qt.GlobalColor.white, Qt.GlobalColor.darkRed, Qt.GlobalColor.magenta, Qt.GlobalColor.darkMagenta, Qt.GlobalColor.green, Qt.GlobalColor.darkGreen, Qt.GlobalColor.yellow, Qt.GlobalColor.darkYellow, Qt.GlobalColor.blue, Qt.GlobalColor.darkBlue, Qt.GlobalColor.gray, Qt.GlobalColor.darkGray, Qt.GlobalColor.lightGray] 
         startData = self.arr
         self.PauseButton.setText("Pause/Continue")
         starttime = time.time()
@@ -187,7 +188,12 @@ class Ui_Simulation(object):
         # BOARD GENERATING
         tab = board.boardGenerate(tab, startData[1], startData[0], startData[2], startData[4])
 
-        for i in range(0, 10):
+        roundCount = 0
+        while (roundCount<10):
+            roundCount+=1
+            time.sleep(1)
+
+
             # CHECKING BOARD IN RANGE OF EVERY OBJECT ON THE BOARD and attacking
             for monster in models.monster.monsterList:
                 sighted = monster.checkRange(tab, monster)
@@ -204,19 +210,32 @@ class Ui_Simulation(object):
 
             for base in models.villageBase.baseList:
                 print(base.currenthp, base.morale, len(base.populationList), base.status)
-            print()
-            if(startData[3] > 0 and i % startData[3] == 0):
+
+
+            if(startData[3] > 0 and roundCount % startData[3] == 0):
                 models.resource.spawnRate(tab)
 
             if(len(models.villageBase.baseList) <= 1):
                 pass  # olaf dokończy koniec gry
 
-        for base in models.villageBase.baseList:
-            brush = QBrush(colors[base.id], Qt.BrushStyle.SolidPattern)
-            self.scene.addRect(QRectF((base.cox)*8, (base.coy)*8, 8, 8), QPen(), brush)
-        # trzeba zrobic bgtemps liste i dodawac QGraphicsRectItem zeby bylo szybciej i latwiej z dostepem do obietkow pozniej
 
-        self.graphicsView.show()
+            brush = QBrush(Qt.GlobalColor.black, Qt.BrushStyle.SolidPattern)
+            for monster in models.monster.monsterList:
+                self.scene.addRect(QRectF((monster.cox)*8,(monster.coy)*8, 8,8),QPen(),brush)
+
+            brush = QBrush(Qt.GlobalColor.red, Qt.BrushStyle.SolidPattern)
+            for resource in models.resource.resourceList:
+                self.scene.addRect(QRectF((resource.cox)*8,(resource.coy)*8, 8,8),QPen(),brush)
+
+
+            for base in models.villageBase.baseList:
+                brush = QBrush(colors[base.id], Qt.BrushStyle.SolidPattern)
+                self.scene.addRect(QRectF((base.cox)*8,(base.coy)*8, 8,8),QPen(),brush) 
+
+            self.app.processEvents()
+            self.scene.update()
+            self.graphicsView.show()
+
 
 
 if __name__ == "__main__":
