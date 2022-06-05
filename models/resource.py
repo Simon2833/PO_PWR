@@ -23,7 +23,5 @@ class resource(unitStatic):
         pos = models.calc.randomPos(len(tab[0]), len(tab))
         while(tab[pos[1]][pos[0]] != 0):
             pos = models.calc.randomPos(len(tab[0]), len(tab))
-        print(tab[pos[1]][pos[0]])
         tab[pos[1]][pos[0]] = 1
-        print(tab[pos[1]][pos[0]])
         resource.resourceList.append(resource(pos[0], pos[1], len(resource.resourceList)))

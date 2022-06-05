@@ -38,7 +38,6 @@ def main():
     sim.setupUi(Form, array)
     Form.show()
     sys.exit(app.exec())
-    del app
 
 
 main()

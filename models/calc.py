@@ -19,25 +19,29 @@ class calc:
         return tab
 
     @classmethod
-    def findMovePos(cls, ent):
+    def monsterFindMovePos(cls, ent):
         x = random.randint(ent.cox - ent.range, ent.cox + ent.range)
         y = random.randint(ent.coy - ent.range, ent.coy + ent.range)
         pos = [x, y]
         return pos
 
     @classmethod
-    def movePos(cls, tab, ent):
+    def movePos(cls, tab, ent, baseList):
         escape = 0
-        pos = calc.findMovePos(ent)
+        if(ent.type == "monster"): pos = calc.monsterFindMovePos(ent)
+        else: pos = calc.villagerFindMovePos(ent, baseList)
         while(0 > pos[0] or (len(tab[1])-1) < pos[0] or 0 > pos[1] or (len(tab)-1) < pos[1]):
-            pos = calc.findMovePos(ent)
+            if(ent.type == "monster"): pos = calc.monsterFindMovePos(ent)
+            else: pos = calc.villagerFindMovePos(ent, baseList)
         while(tab[pos[1]][pos[0]] != 0):
             escape += 1
             if(escape > 10):
                 return [ent.cox, ent.coy]
-            pos = calc.findMovePos(ent)
+            if(ent.type == "monster"): pos = calc.monsterFindMovePos(ent)
+            else: pos = calc.villagerFindMovePos(ent, baseList)
             while(0 > pos[0] or (len(tab[1])-1) < pos[0] or 0 > pos[1] or (len(tab)-1) < pos[1]):
-                pos = calc.findMovePos(ent)
+                if(ent.type == "monster"): pos = calc.monsterFindMovePos(ent)
+                else: pos = calc.villagerFindMovePos(ent, baseList)
         return pos
 
     @classmethod
@@ -56,3 +60,34 @@ class calc:
         answer = int(math.sqrt(answer))
 
         return answer
+
+    @classmethod
+    def villagerFindMovePos(cls, ent, baseList):
+
+        x = random.randint(ent.cox - ent.range, ent.cox + ent.range)
+        y = random.randint(ent.coy - ent.range, ent.coy + ent.range)
+        pos = [x, y]
+        if(baseList[ent.tribe].status == "peace"): return pos
+
+        bestId = 100
+        if(ent.id % 2 == 0):
+
+            best = 100
+            for base in baseList:
+                if(base.status == "peace"): continue
+                if(base.id == baseList[ent.tribe].id): continue
+                new = calc.rangeBetween(ent.cox, ent.coy, base.cox, base.coy)
+                if(new < best):
+                    best = new
+                    bestId = base.id
+
+        if(bestId == 100): return pos
+
+        if(baseList[bestId].cox > ent.cox): x = random.randint(ent.cox, ent.cox + ent.range)
+        else: x = random.randint(ent.cox - ent.range, ent.cox)
+
+        if(baseList[bestId].coy > ent.coy): y = random.randint(ent.coy, ent.coy + ent.range)
+        else: y = random.randint(ent.coy - ent.range, ent.coy)
+
+        pos = [x, y]
+        return pos

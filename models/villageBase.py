@@ -68,13 +68,12 @@ class villageBase(unitStatic):
             for villager in list[base].populationList:
                 villager.tribe = list[base].id
 
-    def heal(self):
-        if(self.currenthp < self.maxhp):
-            self.currenthp = self.currenthp + 3
-            if(self.currenthp > self.maxhp):
-                self.currenthp = self.maxhp
-
     @classmethod
     def christmasTruce(cls):
         for base in villageBase.baseList:
             base.status = "peace"
+
+    @classmethod
+    def year1939(cls):
+        for base in villageBase.baseList:
+            base.status = "war"

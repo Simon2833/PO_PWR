@@ -3,7 +3,6 @@ from PyQt6.QtCore import *
 from PyQt6.QtWidgets import *
 from PyQt6.QtGui import *
 from PyQt6.QtGui import QBrush
-import time
 import sys
 sys.path.append('../')
 import models
@@ -16,8 +15,7 @@ class Ui_Simulation(object):
 
     def Pause(self):
         pass
-        #to be implemented
-
+        # to be implemented
 
     def setupUi(self, Simulation, array):
         Simulation.setObjectName("Simulation")
@@ -153,12 +151,11 @@ class Ui_Simulation(object):
         self.EndButton.setText(_translate("Simulation", "End"))
 
     def Simulate(self):
-        #self.PauseButton.clicked.connect(self.Pause)
+        # self.PauseButton.clicked.connect(self.Pause)
         colors = [Qt.GlobalColor.cyan, Qt.GlobalColor.darkCyan, Qt.GlobalColor.white, Qt.GlobalColor.darkRed, Qt.GlobalColor.magenta, Qt.GlobalColor.darkMagenta, Qt.GlobalColor.green, Qt.GlobalColor.darkGreen, Qt.GlobalColor.yellow, Qt.GlobalColor.darkYellow, Qt.GlobalColor.blue, Qt.GlobalColor.darkBlue, Qt.GlobalColor.gray, Qt.GlobalColor.darkGray, Qt.GlobalColor.lightGray]
         startData = self.arr
         self.PauseButton.setEnabled(False)
         self.PauseButton.setText("Pause (to be implemented)")
-        starttime = time.time()
         self.scene = QGraphicsScene()
         self.scene.setSceneRect(0, 0, 800, 800)
         self.graphicsView.setScene(self.scene)
@@ -168,7 +165,6 @@ class Ui_Simulation(object):
         edgeB = QPixmap(QImage('ui/assets/edge_B.png'))
         edgeR = QPixmap(QImage('ui/assets/edge_R.png'))
         land = QPixmap(QImage('ui/assets/land.png'))
-        itemcounter = 0
         bgtemps = []
         h = startData[-1]
         w = startData[-2]
@@ -187,8 +183,6 @@ class Ui_Simulation(object):
                 self.scene.addItem(bgtemps[len(bgtemps)-1])
                 bgtemps[len(bgtemps)-1].setPos(x*8, y*8)
 
-        print(time.time() - starttime)
-
         # BOARD INITIALIZING
         board = models.board(w, h)
         tab = board.boardInit()
@@ -197,44 +191,40 @@ class Ui_Simulation(object):
         tab = board.boardGenerate(tab, startData[1], startData[0], startData[2], startData[4])
 
         roundCount = 0
-        while (len(models.villageBase.baseList)) != 1 and self.exitCondition == False:
-            roundCount+=1
+        while (len(models.villageBase.baseList)) != 1 and self.exitCondition is False:
+            roundCount += 1
             self.roundCount.setText(str(roundCount))
             self.monsterCount.setText(str(len(models.monster.monsterList)))
             self.tribeCount.setText(str(len(models.villageBase.baseList)))
             self.foodCount.setText(str(len(models.resource.resourceList)))
 
-            #time.sleep(1/(w+h)+self.simSpeedSlider.value()/1000)
-            #print(str(1/(w+h)))
-            #QtTest.QTest.qWait(int(1000/(w+h)+self.simSpeedSlider.value()))
-
-
             # CHECKING BOARD IN RANGE OF EVERY OBJECT ON THE BOARD and attacking
             for monster in models.monster.monsterList:
-                sighted = monster.checkRange(tab, monster)
-                monster.move(tab, monster)
+                monster.checkRange(tab, monster)
+                monster.move(tab, monster, models.villageBase.baseList)
                 monster.heal()
 
             for base in models.villageBase.baseList:
                 base.moraleUpdate("None", models.villageBase.baseList, tab)
                 for villager in base.populationList:
-                    sighted = villager.checkRange(tab, villager)
-                    villager.move(tab, villager)
+                    villager.checkRange(tab, villager)
+                    villager.move(tab, villager, models.villageBase.baseList)
                     villager.heal()
-                base.heal()
 
             for base in models.villageBase.baseList:
-                print(base.currenthp, base.morale, len(base.populationList), base.status)
+                print(f"nr {base.id} ,{base.currenthp} ,{base.morale} ,{len(base.populationList)} ,{base.status}")
             print()
 
             if(startData[3] > 0 and roundCount % startData[3] == 0):
                 models.resource.spawnRate(tab)
 
-            if(roundCount % 100 == 0):
+            if(roundCount % 199 == 0):
                 models.villageBase.christmasTruce()
+            if(roundCount % 400 == 0):
+                models.villageBase.year1939()
 
 
-#################################### VVVVVVVVV RENDERING VVVVVVVV ################################### 
+# ################################### VVVVVVVVV RENDERING VVVVVVVV ###################################
 
             for x in range(0, w):
                 for y in range(0, h):
@@ -255,30 +245,20 @@ class Ui_Simulation(object):
             pen.setWidthF(0.001)
             brush = QBrush(Qt.GlobalColor.black, Qt.BrushStyle.SolidPattern)
             for monster in models.monster.monsterList:
-                self.scene.addRect(QRectF((monster.cox)*8,(monster.coy)*8, 8,8),pen,brush)
-                
-
+                self.scene.addRect(QRectF((monster.cox)*8, (monster.coy)*8, 8, 8), pen, brush)
 
             brush = QBrush(Qt.GlobalColor.red, Qt.BrushStyle.Dense2Pattern)
             for resource in models.resource.resourceList:
-                self.scene.addRect(QRectF((resource.cox)*8,(resource.coy)*8, 8,8),pen,brush)
-
+                self.scene.addRect(QRectF((resource.cox)*8, (resource.coy)*8, 8, 8), pen, brush)
 
             for base in models.villageBase.baseList:
                 brush = QBrush(colors[base.colorId], Qt.BrushStyle.SolidPattern)
                 for villager in base.populationList:
-                    self.scene.addRect(QRectF((villager.cox)*8,(villager.coy)*8, 8,8),pen,brush)
-
-
-
-
-
-
+                    self.scene.addRect(QRectF((villager.cox)*8, (villager.coy)*8, 8, 8), pen, brush)
 
             for base in models.villageBase.baseList:
                 brush = QBrush(colors[base.colorId], Qt.BrushStyle.SolidPattern)
-                self.scene.addRect(QRectF((base.cox)*8,(base.coy)*8, 8,8),QPen(),brush) 
-
+                self.scene.addRect(QRectF((base.cox)*8, (base.coy)*8, 8, 8), QPen(), brush)
 
             self.app.processEvents()
             self.scene.update()
@@ -288,10 +268,7 @@ class Ui_Simulation(object):
                 return
             QtTest.QTest.qWait(int(1000/(w+h)+self.simSpeedSlider.value()))
 
-            
-
             self.scene.clear()
-
 
 
 if __name__ == "__main__":

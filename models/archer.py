@@ -1,5 +1,4 @@
 from models.unitDynamic import unitDynamic
-from abc import abstractmethod
 
 
 # One of three tribe classes which will be concluded in simulation
@@ -15,6 +14,3 @@ class archer(unitDynamic):
         del list[self.tribe].populationList[self.id]
         for villager in range(len(list[self.tribe].populationList)):
             list[self.tribe].populationList[villager].id = villager
-
-    
-
