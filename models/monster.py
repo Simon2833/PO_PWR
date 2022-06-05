@@ -7,7 +7,7 @@ class monster(unitDynamic):
     # List of monsters used in board class to store objects in their categories
     monsterList = []
 
-    def __init__(self, cox, coy, id, loot="bussinLoot", maxhp=100, attack=10, armor=10, range=1):
+    def __init__(self, cox, coy, id, loot="bussinLoot", maxhp=100, attack=10, armor=10, range=2):
         super().__init__(cox, coy, id, maxhp, attack, armor, range)
         self.loot = loot
         self.type = "monster"

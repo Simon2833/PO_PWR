@@ -154,7 +154,7 @@ class Ui_Simulation(object):
 
     def Simulate(self):
         #self.PauseButton.clicked.connect(self.Pause)
-        colors=[Qt.GlobalColor.cyan, Qt.GlobalColor.darkCyan, Qt.GlobalColor.white, Qt.GlobalColor.darkRed, Qt.GlobalColor.magenta, Qt.GlobalColor.darkMagenta, Qt.GlobalColor.green, Qt.GlobalColor.darkGreen, Qt.GlobalColor.yellow, Qt.GlobalColor.darkYellow, Qt.GlobalColor.blue, Qt.GlobalColor.darkBlue, Qt.GlobalColor.gray, Qt.GlobalColor.darkGray, Qt.GlobalColor.lightGray] 
+        colors = [Qt.GlobalColor.cyan, Qt.GlobalColor.darkCyan, Qt.GlobalColor.white, Qt.GlobalColor.darkRed, Qt.GlobalColor.magenta, Qt.GlobalColor.darkMagenta, Qt.GlobalColor.green, Qt.GlobalColor.darkGreen, Qt.GlobalColor.yellow, Qt.GlobalColor.darkYellow, Qt.GlobalColor.blue, Qt.GlobalColor.darkBlue, Qt.GlobalColor.gray, Qt.GlobalColor.darkGray, Qt.GlobalColor.lightGray]
         startData = self.arr
         self.PauseButton.setEnabled(False)
         self.PauseButton.setText("Pause (to be implemented)")
@@ -227,10 +227,11 @@ class Ui_Simulation(object):
                 print(base.currenthp, base.morale, len(base.populationList), base.status)
             print()
 
-
             if(startData[3] > 0 and roundCount % startData[3] == 0):
                 models.resource.spawnRate(tab)
 
+            if(roundCount % 100 == 0):
+                models.villageBase.christmasTruce()
 
 
 #################################### VVVVVVVVV RENDERING VVVVVVVV ################################### 
@@ -264,7 +265,7 @@ class Ui_Simulation(object):
 
 
             for base in models.villageBase.baseList:
-                brush = QBrush(colors[base.id], Qt.BrushStyle.SolidPattern)
+                brush = QBrush(colors[base.colorId], Qt.BrushStyle.SolidPattern)
                 for villager in base.populationList:
                     self.scene.addRect(QRectF((villager.cox)*8,(villager.coy)*8, 8,8),pen,brush)
 
@@ -275,7 +276,7 @@ class Ui_Simulation(object):
 
 
             for base in models.villageBase.baseList:
-                brush = QBrush(colors[base.id], Qt.BrushStyle.SolidPattern)
+                brush = QBrush(colors[base.colorId], Qt.BrushStyle.SolidPattern)
                 self.scene.addRect(QRectF((base.cox)*8,(base.coy)*8, 8,8),QPen(),brush) 
 
 

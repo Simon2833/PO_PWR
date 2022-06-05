@@ -16,11 +16,14 @@ class resource(unitStatic):
         del list[self.id]
         for food in range(len(list)):
             list[food].id = food
-        tribe.morale = tribe.morale + 10
+        tribe.morale = tribe.morale + 20
 
     @classmethod
     def spawnRate(cls, tab):
         pos = models.calc.randomPos(len(tab[0]), len(tab))
-        while(tab[pos[1]][pos[0]] not in [1, 2, 3, 4, 5, 6]):
+        while(tab[pos[1]][pos[0]] != 0):
             pos = models.calc.randomPos(len(tab[0]), len(tab))
+        print(tab[pos[1]][pos[0]])
+        tab[pos[1]][pos[0]] = 1
+        print(tab[pos[1]][pos[0]])
         resource.resourceList.append(resource(pos[0], pos[1], len(resource.resourceList)))
