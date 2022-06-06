@@ -16,6 +16,35 @@ class unitDynamic(unit):
         self.coy = coy
 
     @classmethod
+    def move(cls, tab, entity, baseList):
+        name = type(entity).__name__
+        tab[entity.coy][entity.cox] = 0
+        mPos = models.calc.movePos(tab, entity, baseList)
+        entity.cox = mPos[0]
+        entity.coy = mPos[1]
+        if(name == "monster"):
+            tab[mPos[1]][mPos[0]] = 2
+            return
+        elif(name == "warrior"):
+            tab[mPos[1]][mPos[0]] = 4
+            return
+        elif(name == "spearman"):
+            tab[mPos[1]][mPos[0]] = 5
+            return
+        elif(name == "archer"):
+            tab[mPos[1]][mPos[0]] = 6
+            return
+
+    def deletion(self, tribe, list, tab):
+        pass
+
+    def heal(self):
+        if(self.currenthp < self.__maxhp):
+            self.currenthp = self.currenthp + 2
+            if(self.currenthp > self.__maxhp):
+                self.currenthp = self.__maxhp
+
+    @classmethod
     def checkRange(cls, tab, ent):
         # In chosen list it checks for every position around(in a circle) given object, according to this object's range
         x = 0
@@ -79,35 +108,6 @@ class unitDynamic(unit):
             return x
 
     @classmethod
-    def move(cls, tab, entity, baseList):
-        name = type(entity).__name__
-        tab[entity.coy][entity.cox] = 0
-        mPos = models.calc.movePos(tab, entity, baseList)
-        entity.cox = mPos[0]
-        entity.coy = mPos[1]
-        if(name == "monster"):
-            tab[mPos[1]][mPos[0]] = 2
-            return
-        elif(name == "warrior"):
-            tab[mPos[1]][mPos[0]] = 4
-            return
-        elif(name == "spearman"):
-            tab[mPos[1]][mPos[0]] = 5
-            return
-        elif(name == "archer"):
-            tab[mPos[1]][mPos[0]] = 6
-            return
-
-    def deletion(self, tribe, list, tab):
-        pass
-
-    def heal(self):
-        if(self.currenthp < self.__maxhp):
-            self.currenthp = self.currenthp + 2
-            if(self.currenthp > self.__maxhp):
-                self.currenthp = self.__maxhp
-
-    @classmethod
     def __villagerVillager(cls, ent, x, y, tab):
         for villagerlist in models.villageBase.baseList:
             if(ent.tribe == villagerlist.id): continue
@@ -121,7 +121,6 @@ class unitDynamic(unit):
                     villager.currenthp = villager.currenthp - ent.attack
                     if (villager.currenthp <= 0):
                         villager.deletion("None", models.villageBase.baseList, tab)
-                        villagerlist.morale = villagerlist.morale - 10
                         villagerlist.status = "war"
                         models.villageBase.baseList[ent.tribe].status = "war"
                         if(len(villagerlist.populationList) == 0):

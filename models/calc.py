@@ -19,13 +19,6 @@ class calc:
         return tab
 
     @classmethod
-    def __monsterFindMovePos(cls, ent):
-        x = random.randint(ent.cox - ent.range, ent.cox + ent.range)
-        y = random.randint(ent.coy - ent.range, ent.coy + ent.range)
-        pos = [x, y]
-        return pos
-
-    @classmethod
     def movePos(cls, tab, ent, baseList):
         escape = 0
         if(ent.type == "monster"): pos = calc.__monsterFindMovePos(ent)
@@ -60,6 +53,13 @@ class calc:
         answer = int(math.sqrt(answer))
 
         return answer
+
+    @classmethod
+    def __monsterFindMovePos(cls, ent):
+        x = random.randint(ent.cox - ent.range, ent.cox + ent.range)
+        y = random.randint(ent.coy - ent.range, ent.coy + ent.range)
+        pos = [x, y]
+        return pos
 
     @classmethod
     def __villagerFindMovePos(cls, ent, baseList):

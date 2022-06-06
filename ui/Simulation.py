@@ -218,7 +218,7 @@ class Ui_Simulation(object):
             if(startData[3] > 0 and roundCount % startData[3] == 0):
                 models.resource.spawnRate(tab)
 
-            if(roundCount % 199 == 0):
+            if(roundCount == 100):
                 models.villageBase.christmasTruce()
             if(roundCount % 400 == 0):
                 models.villageBase.year1939()

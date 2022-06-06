@@ -14,6 +14,18 @@ class board:
         tab = [[None] * self.__cox for _ in range(self.__coy)]
         return tab
 
+    # All the starting objects are generated on the previously empty board
+    def boardGenerate(self, tab, maxFood, maxMonster, maxTribes, initialpopulation):
+        self.__tribeGenerate(tab, maxTribes, initialpopulation)
+        self.__foodGenerate(tab, maxFood)
+        self.__monsterGenerate(tab, maxMonster)
+        for y in range(len(tab)):
+            for x in range(len(tab[y])):
+                if (tab[y][x] not in [1, 2, 3, 4, 5, 6]):
+                    tab[y][x] = 0
+
+        return tab
+
     # Function generates random coordinates and if the spot is empty makes new food object in food list with those coordinates
     def __foodGenerate(self, tab, maxFood):
         foodCount = 0
@@ -89,14 +101,4 @@ class board:
                 pos = models.calc.randomPos(self.__cox, self.__coy)
         return pos
 
-    # All the starting objects are generated on the previously empty board
-    def boardGenerate(self, tab, maxFood, maxMonster, maxTribes, initialpopulation):
-        self.__tribeGenerate(tab, maxTribes, initialpopulation)
-        self.__foodGenerate(tab, maxFood)
-        self.__monsterGenerate(tab, maxMonster)
-        for y in range(len(tab)):
-            for x in range(len(tab[y])):
-                if (tab[y][x] not in [1, 2, 3, 4, 5, 6]):
-                    tab[y][x] = 0
 
-        return tab

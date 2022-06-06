@@ -11,6 +11,7 @@ class archer(unitDynamic):
 
     def deletion(self, tribe, list, tab):
         tab[self.coy][self.cox] = 0
+        list[self.tribe].morale = list[self.tribe].morale - 10
         del list[self.tribe].populationList[self.id]
         for villager in range(len(list[self.tribe].populationList)):
             list[self.tribe].populationList[villager].id = villager
