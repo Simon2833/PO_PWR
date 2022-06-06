@@ -7,8 +7,8 @@ class unitDynamic(unit):
 
     def __init__(self, cox, coy, id, maxhp, attack, armor, range):
         super().__init__(cox, coy, id)
-        self.maxhp = maxhp
-        self.currenthp = self.maxhp
+        self.__maxhp = maxhp
+        self.currenthp = self.__maxhp
         self.attack = attack
         self.armor = armor
         self.range = range
@@ -21,23 +21,23 @@ class unitDynamic(unit):
         x = 0
         y = 0
         for j in range(1, ent.range+1):
-            y = unitDynamic.direction("south", x, y)
-            x = unitDynamic.direction("west", x, y)
+            y = unitDynamic.__direction("south", x, y)
+            x = unitDynamic.__direction("west", x, y)
             for k in range(2*j):
-                y = unitDynamic.direction("north", x, y)
-                unitDynamic.ifInBoard(tab, x, y, ent)
+                y = unitDynamic.__direction("north", x, y)
+                unitDynamic.__ifInBoard(tab, x, y, ent)
             for k in range(2*j):
-                x = unitDynamic.direction("east", x, y)
-                unitDynamic.ifInBoard(tab, x, y, ent)
+                x = unitDynamic.__direction("east", x, y)
+                unitDynamic.__ifInBoard(tab, x, y, ent)
             for k in range(2*j):
-                y = unitDynamic.direction("south", x, y)
-                unitDynamic.ifInBoard(tab, x, y, ent)
+                y = unitDynamic.__direction("south", x, y)
+                unitDynamic.__ifInBoard(tab, x, y, ent)
             for k in range(2*j):
-                x = unitDynamic.direction("west", x, y)
-                unitDynamic.ifInBoard(tab, x, y, ent)
+                x = unitDynamic.__direction("west", x, y)
+                unitDynamic.__ifInBoard(tab, x, y, ent)
 
     @classmethod
-    def ifInBoard(cls, tab, x, y, ent):
+    def __ifInBoard(cls, tab, x, y, ent):
         # Function for possible error if checked position would be outside of board's range
         if(0 > (ent.cox + x) or (len(tab[1])-1) < (ent.cox + x) or 0 > (ent.coy + y) or (len(tab)-1) < (ent.coy + y)):
             return
@@ -46,23 +46,23 @@ class unitDynamic(unit):
         checked = tab[ent.coy + y][ent.cox + x]
         if(ent.type == "monster"):
             if(checked in [4, 5, 6]):
-                unitDynamic.monsterVillager(ent, x, y, tab)
+                unitDynamic.__monsterVillager(ent, x, y, tab)
 
         elif(ent.type == "villager"):
             if(checked == 1):
-                unitDynamic.villagerFood(ent, x, y, tab)
+                unitDynamic.__villagerFood(ent, x, y, tab)
 
             if(checked in [4, 5, 6]):
-                unitDynamic.villagerVillager(ent, x, y, tab)
+                unitDynamic.__villagerVillager(ent, x, y, tab)
 
             elif(checked == 3):
-                unitDynamic.villagerBase(ent, x, y, tab)
+                unitDynamic.__villagerBase(ent, x, y, tab)
 
             elif(checked == 2):
-                unitDynamic.villagerMonster(ent, x, y, tab)
+                unitDynamic.__villagerMonster(ent, x, y, tab)
 
     @classmethod
-    def direction(cls, direction, x, y):
+    def __direction(cls, direction, x, y):
         # Function to switch between checked positions
         # Board is inverted, when we go up Y is decreasing
         if(direction == "north"):
@@ -102,18 +102,17 @@ class unitDynamic(unit):
         pass
 
     def heal(self):
-        if(self.currenthp < self.maxhp):
+        if(self.currenthp < self.__maxhp):
             self.currenthp = self.currenthp + 2
-            if(self.currenthp > self.maxhp):
-                self.currenthp = self.maxhp
+            if(self.currenthp > self.__maxhp):
+                self.currenthp = self.__maxhp
 
     @classmethod
-    def villagerVillager(cls, ent, x, y, tab):
+    def __villagerVillager(cls, ent, x, y, tab):
         for villagerlist in models.villageBase.baseList:
             if(ent.tribe == villagerlist.id): continue
             for villager in villagerlist.populationList:
                 if(ent.cox + x != villager.cox or ent.coy + y != villager.coy): continue
-
                 if(models.calc.randomChance() < 2 and villagerlist.attitude == models.villageBase.baseList[ent.tribe].attitude == "passive"):
                     if(villagerlist.status == "war"):
                         models.villageBase.baseList[ent.tribe].status = "war"
@@ -129,23 +128,23 @@ class unitDynamic(unit):
                             villagerlist.deletion(models.villageBase.baseList[ent.tribe], models.villageBase.baseList, tab)
 
     @classmethod
-    def villagerFood(cls, ent, x, y, tab):
+    def __villagerFood(cls, ent, x, y, tab):
         for food in models.resource.resourceList:
             if(ent.cox + x != food.cox or ent.coy + y != food.coy): continue
             food.deletion(models.villageBase.baseList[ent.tribe], models.resource.resourceList, tab)
 
     @classmethod
-    def villagerBase(cls, ent, x, y, tab):
+    def __villagerBase(cls, ent, x, y, tab):
         for base in models.villageBase.baseList:
-            if(ent.tribe != base.id and models.villageBase.baseList[ent.tribe].status == "war" and base.status == "war"):
-                if(ent.cox + x != base.cox or ent.coy + y != base.coy): continue
-                base.currenthp = base.currenthp - 2
-                if (base.currenthp > 0): continue
-                base.deletion(models.villageBase.baseList[ent.tribe], models.villageBase.baseList, tab)
-                models.villageBase.baseList[ent.tribe].status = "peace"
+            if(ent.tribe == base.id or models.villageBase.baseList[ent.tribe].status != "war" or base.status != "war"): continue
+            if(ent.cox + x != base.cox or ent.coy + y != base.coy): continue
+            base.currenthp = base.currenthp - 2
+            if (base.currenthp > 0): continue
+            base.deletion(models.villageBase.baseList[ent.tribe], models.villageBase.baseList, tab)
+            models.villageBase.baseList[ent.tribe].status = "peace"
 
     @classmethod
-    def villagerMonster(cls, ent, x, y, tab):
+    def __villagerMonster(cls, ent, x, y, tab):
         for monsterEnemy in models.monster.monsterList:
             if(ent.cox + x != monsterEnemy.cox or ent.coy + y != monsterEnemy.coy): continue
             monsterEnemy.currenthp = monsterEnemy.currenthp - ent.attack
@@ -153,7 +152,7 @@ class unitDynamic(unit):
             monsterEnemy.deletion(models.villageBase.baseList[ent.tribe], models.monster.monsterList, tab)
 
     @classmethod
-    def monsterVillager(cls, ent, x, y, tab):
+    def __monsterVillager(cls, ent, x, y, tab):
         for villagerlist in models.villageBase.baseList:
             for villager in villagerlist.populationList:
                 if(ent.cox + x != villager.cox or ent.coy + y != villager.coy): continue

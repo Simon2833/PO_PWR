@@ -19,7 +19,7 @@ class calc:
         return tab
 
     @classmethod
-    def monsterFindMovePos(cls, ent):
+    def __monsterFindMovePos(cls, ent):
         x = random.randint(ent.cox - ent.range, ent.cox + ent.range)
         y = random.randint(ent.coy - ent.range, ent.coy + ent.range)
         pos = [x, y]
@@ -28,20 +28,20 @@ class calc:
     @classmethod
     def movePos(cls, tab, ent, baseList):
         escape = 0
-        if(ent.type == "monster"): pos = calc.monsterFindMovePos(ent)
-        else: pos = calc.villagerFindMovePos(ent, baseList)
+        if(ent.type == "monster"): pos = calc.__monsterFindMovePos(ent)
+        else: pos = calc.__villagerFindMovePos(ent, baseList)
         while(0 > pos[0] or (len(tab[1])-1) < pos[0] or 0 > pos[1] or (len(tab)-1) < pos[1]):
-            if(ent.type == "monster"): pos = calc.monsterFindMovePos(ent)
-            else: pos = calc.villagerFindMovePos(ent, baseList)
+            if(ent.type == "monster"): pos = calc.__monsterFindMovePos(ent)
+            else: pos = calc.__villagerFindMovePos(ent, baseList)
         while(tab[pos[1]][pos[0]] != 0):
             escape += 1
             if(escape > 10):
                 return [ent.cox, ent.coy]
-            if(ent.type == "monster"): pos = calc.monsterFindMovePos(ent)
-            else: pos = calc.villagerFindMovePos(ent, baseList)
+            if(ent.type == "monster"): pos = calc.__monsterFindMovePos(ent)
+            else: pos = calc.__villagerFindMovePos(ent, baseList)
             while(0 > pos[0] or (len(tab[1])-1) < pos[0] or 0 > pos[1] or (len(tab)-1) < pos[1]):
-                if(ent.type == "monster"): pos = calc.monsterFindMovePos(ent)
-                else: pos = calc.villagerFindMovePos(ent, baseList)
+                if(ent.type == "monster"): pos = calc.__monsterFindMovePos(ent)
+                else: pos = calc.__villagerFindMovePos(ent, baseList)
         return pos
 
     @classmethod
@@ -62,7 +62,7 @@ class calc:
         return answer
 
     @classmethod
-    def villagerFindMovePos(cls, ent, baseList):
+    def __villagerFindMovePos(cls, ent, baseList):
 
         x = random.randint(ent.cox - ent.range, ent.cox + ent.range)
         y = random.randint(ent.coy - ent.range, ent.coy + ent.range)
