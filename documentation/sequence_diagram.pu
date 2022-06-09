@@ -1,0 +1,25 @@
+@startuml sequence diagram
+main -> Ui_Forms: userInput
+Ui_Forms --> main: userInput
+main -> Ui_Simulation: userInput
+Ui_Simulation --> board: boardInit(w, h)
+board --> Ui_Simulation: tab[]
+loop while (len(models.villageBase.baseList)) != 1 and self.exitCondition is False
+    loop for monster in models.monster.monsterList
+        Ui_Simulation --> monster: checkRange(tab, monster)
+        Ui_Simulation --> monster: move(tab, monster,for monster in models.monster.monsterList)
+        Ui_Simulation --> monster: heal()
+    end
+
+    loop for base in models.villageBase.baseList
+        loop for villager in base.populationList
+            Ui_Simulation --> base: checkRange(tab, base)
+            Ui_Simulation --> base: move(tab, base)
+            Ui_Simulation --> base: heal()
+        end
+    end
+    loop for base in models.villageBase.baseList
+        Ui_Simulation --> base: moraleUpdate()
+    end
+end
+@enduml

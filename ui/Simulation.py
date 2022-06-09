@@ -227,14 +227,14 @@ class Ui_Simulation(object):
                 monster.heal()
 
             for base in models.villageBase.baseList:
-                base.moraleUpdate("None", models.villageBase.baseList, tab)
+                
                 for villager in base.populationList:
                     villager.checkRange(tab, villager)
                     villager.move(tab, villager, models.villageBase.baseList)
                     villager.heal()
 
             for base in models.villageBase.baseList: #console and csv logging loop
-                print(f"nr {base.id} ,{base.currenthp} ,{base.morale} ,{len(base.populationList)} ,{base.status}")
+                base.moraleUpdate("None", models.villageBase.baseList, tab)
                 writer.writerow([base.id, base.currenthp, base.morale, str(len(base.populationList)), base.status])
             print()
             writer.writerow("")

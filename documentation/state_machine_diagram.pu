@@ -1,0 +1,64 @@
+@startuml state machine diagram
+hide empty description
+state SimulationState{
+    [*] --> Idle: simulation creation
+    Idle --> Initialized: information taken from user
+    Initialized --> Running: next round called
+    Running --> Running: next round called
+    Running --> [*]: less than 2 tribes left
+}
+
+state TribeBaseState{
+    [*] --> TribeBaseFullHP: initialization
+    Initialized --> TribeBaseFullHP: succeeded
+    TribeBaseFullHP --> TribeBaseInjured: attacked by another tribe units
+    TribeBaseInjured --> TribeBaseInjured: attacked by another tribe units
+    TribeBaseInjured --> TribeBaseDead: attacked by another tribe units
+    TribeBaseDead --> [*]: killed by another tribe units
+}
+
+state ArcherState{
+    [*] --> ArcherFullHP: initialization
+    Initialized --> ArcherFullHP: succeeded
+    ArcherFullHP --> ArcherInjured: attacked by another tribe units
+    ArcherInjured --> ArcherInjured: attacked by another tribe units
+    ArcherInjured --> ArcherDead: attacked by another tribe units
+    ArcherDead --> [*]: killed by another tribe units
+}
+
+state WarriorState{
+    [*] --> WarriorFullHP: initialization
+    Initialized --> WarriorFullHP: succeeded
+    WarriorFullHP --> WarriorInjured: attacked by another tribe units
+    WarriorInjured --> WarriorInjured: attacked by another tribe units
+    WarriorInjured --> WarriorDead: attacked by another tribe units
+    WarriorDead --> [*]: killed by another tribe units
+}
+
+state SpearmanState{
+    [*] --> SpearmanFullHP: initialization
+    Initialized --> SpearmanFullHP: succeeded
+    SpearmanFullHP --> SpearmanInjured: attacked by another tribe units
+    SpearmanInjured --> SpearmanInjured: attacked by another tribe units
+    SpearmanInjured --> SpearmanDead: attacked by another tribe units
+    SpearmanDead --> [*]: killed by another tribe units
+}
+
+state MonsterState{
+    [*] --> MonsterFullHP: initialization
+    Initialized --> MonsterFullHP: succeeded
+    MonsterFullHP --> MonsterInjured: attacked by tribe units
+    MonsterInjured --> MonsterInjured: attacked by tribe units
+    MonsterInjured --> MonsterDead: attacked by tribe units
+    MonsterDead --> [*]: killed by tribe units
+}
+
+state ResourceState{
+    [*] --> ResourceGenerated: initialization
+    Initialized --> ResourceGenerated: succeeded
+    ResourceGenerated --> ResourceIndle: next round called
+    ResourceIndle --> ResourceIndle: next round called
+    ResourceIndle --> ResourcePickedUp: Unit picked up resource
+    ResourcePickedUp --> [*]
+}
+@endluml
