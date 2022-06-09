@@ -252,12 +252,12 @@ class Ui_Simulation(object):
                 self.scene.addRect(QRectF((resource.cox)*8, (resource.coy)*8, 8, 8), pen, brush)
 
             for base in models.villageBase.baseList:
-                brush = QBrush(colors[base.colorId], Qt.BrushStyle.SolidPattern)
+                brush = QBrush(colors[base.getColorId()], Qt.BrushStyle.SolidPattern)
                 for villager in base.populationList:
                     self.scene.addRect(QRectF((villager.cox)*8, (villager.coy)*8, 8, 8), pen, brush)
 
             for base in models.villageBase.baseList:
-                brush = QBrush(colors[base.colorId], Qt.BrushStyle.SolidPattern)
+                brush = QBrush(colors[base.getColorId()], Qt.BrushStyle.SolidPattern)
                 self.scene.addRect(QRectF((base.cox)*8, (base.coy)*8, 8, 8), QPen(), brush)
 
             self.app.processEvents()

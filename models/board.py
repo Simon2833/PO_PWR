@@ -56,7 +56,7 @@ class board:
             if (tab[pos[1]][pos[0]] not in [1, 2, 3, 4, 5, 6]):
                 tab[pos[1]][pos[0]] = 3
                 models.villageBase.baseList.append(models.villageBase(pos[0], pos[1], len(models.villageBase.baseList), initialpopulation))
-                self.__villagersGenerate(tab, models.villageBase.baseList[tribeCount].population, tribeCount, pos[0], pos[1])
+                self.__villagersGenerate(tab, models.villageBase.baseList[tribeCount].getPopulation(), tribeCount, pos[0], pos[1])
                 tribeCount += 1
 
     # Function generates random coordinates and if the spot is empty makes new villager object in population list with those coordinates

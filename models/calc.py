@@ -21,19 +21,19 @@ class calc:
     @classmethod
     def movePos(cls, tab, ent, baseList):
         escape = 0
-        if(ent.type == "monster"): pos = calc.__monsterFindMovePos(ent)
+        if(ent.getType() == "monster"): pos = calc.__monsterFindMovePos(ent)
         else: pos = calc.__villagerFindMovePos(ent, baseList)
         while(0 > pos[0] or (len(tab[1])-1) < pos[0] or 0 > pos[1] or (len(tab)-1) < pos[1]):
-            if(ent.type == "monster"): pos = calc.__monsterFindMovePos(ent)
+            if(ent.getType() == "monster"): pos = calc.__monsterFindMovePos(ent)
             else: pos = calc.__villagerFindMovePos(ent, baseList)
         while(tab[pos[1]][pos[0]] != 0):
             escape += 1
             if(escape > 10):
                 return [ent.cox, ent.coy]
-            if(ent.type == "monster"): pos = calc.__monsterFindMovePos(ent)
+            if(ent.getType() == "monster"): pos = calc.__monsterFindMovePos(ent)
             else: pos = calc.__villagerFindMovePos(ent, baseList)
             while(0 > pos[0] or (len(tab[1])-1) < pos[0] or 0 > pos[1] or (len(tab)-1) < pos[1]):
-                if(ent.type == "monster"): pos = calc.__monsterFindMovePos(ent)
+                if(ent.getType() == "monster"): pos = calc.__monsterFindMovePos(ent)
                 else: pos = calc.__villagerFindMovePos(ent, baseList)
         return pos
 

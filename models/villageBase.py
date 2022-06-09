@@ -15,11 +15,20 @@ class villageBase(unitStatic):
         self.status = "peace"
         self.maxhp = 100
         self.currenthp = 100
-        self.population = initialpopulation
+        self.__population = initialpopulation
         self.populationList = []
         self.morale = morale
-        self.attitude = calc.yesOrNo("passive", "aggressive")
-        self.colorId = self.id
+        self.__attitude = calc.yesOrNo("passive", "aggressive")
+        self.__colorId = self.id
+
+    def getPopulation(self):
+        return self.__population
+
+    def getAttitude(self):
+        return self.__attitude
+
+    def getColorId(self):
+        return self.__colorId
 
     def deletion(self, tribe, list, tab):
         for villager in self.populationList:

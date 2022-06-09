@@ -7,7 +7,10 @@ class warrior(unitDynamic):
     def __init__(self, cox, coy, id, tribe, maxhp=200, attack=40, armor=5, range=2):
         super().__init__(cox, coy, id, maxhp, attack, armor, range)
         self.tribe = tribe
-        self.type = "villager"
+        self.__type = "villager"
+
+    def getType(self):
+        return self.__type
 
     def deletion(self, tribe, list, tab):
         tab[self.coy][self.cox] = 0
@@ -15,4 +18,3 @@ class warrior(unitDynamic):
         del list[self.tribe].populationList[self.id]
         for villager in range(len(list[self.tribe].populationList)):
             list[self.tribe].populationList[villager].id = villager
-

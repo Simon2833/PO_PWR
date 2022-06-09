@@ -7,8 +7,8 @@ class unitDynamic(unit):
 
     def __init__(self, cox, coy, id, maxhp, attack, armor, range):
         super().__init__(cox, coy, id)
-        self.__maxhp = maxhp
-        self.currenthp = self.__maxhp
+        self.maxhp = maxhp
+        self.currenthp = self.maxhp
         self.attack = attack
         self.armor = armor
         self.range = range
@@ -39,10 +39,10 @@ class unitDynamic(unit):
         pass
 
     def heal(self):
-        if(self.currenthp < self.__maxhp):
+        if(self.currenthp < self.maxhp):
             self.currenthp = self.currenthp + 2
-            if(self.currenthp > self.__maxhp):
-                self.currenthp = self.__maxhp
+            if(self.currenthp > self.maxhp):
+                self.currenthp = self.maxhp
 
     @classmethod
     def checkRange(cls, tab, ent):
@@ -73,11 +73,11 @@ class unitDynamic(unit):
 
         # Checks if there is villager in monsters range
         checked = tab[ent.coy + y][ent.cox + x]
-        if(ent.type == "monster"):
+        if(ent.getType() == "monster"):
             if(checked in [4, 5, 6]):
                 unitDynamic.__monsterVillager(ent, x, y, tab)
 
-        elif(ent.type == "villager"):
+        elif(ent.getType() == "villager"):
             if(checked == 1):
                 unitDynamic.__villagerFood(ent, x, y, tab)
 
@@ -113,7 +113,7 @@ class unitDynamic(unit):
             if(ent.tribe == villagerlist.id): continue
             for villager in villagerlist.populationList:
                 if(ent.cox + x != villager.cox or ent.coy + y != villager.coy): continue
-                if(models.calc.randomChance() < 2 and villagerlist.attitude == models.villageBase.baseList[ent.tribe].attitude == "passive"):
+                if(models.calc.randomChance() < 2 and villagerlist.getAttitude() == models.villageBase.baseList[ent.tribe].getAttitude() == "passive"):
                     if(villagerlist.status == "war"):
                         models.villageBase.baseList[ent.tribe].status = "war"
                     villagerlist.deletion(models.villageBase.baseList[ent.tribe], models.villageBase.baseList, tab)
