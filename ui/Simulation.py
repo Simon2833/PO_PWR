@@ -219,9 +219,9 @@ class Ui_Simulation(object):
                 models.resource.spawnRate(tab)
 
             if(roundCount == 100):
-                models.villageBase.christmasTruce()
+                models.villageBase.globalPeace()
             if(roundCount % 400 == 0):
-                models.villageBase.year1939()
+                models.villageBase.globalWar()
 
 
 # ################################### VVVVVVVVV RENDERING VVVVVVVV ###################################

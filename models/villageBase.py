@@ -69,11 +69,11 @@ class villageBase(unitStatic):
                 villager.tribe = list[base].id
 
     @classmethod
-    def christmasTruce(cls):
+    def globalPeace(cls):
         for base in villageBase.baseList:
             base.status = "peace"
 
     @classmethod
-    def year1939(cls):
+    def globalWar(cls):
         for base in villageBase.baseList:
             base.status = "war"
