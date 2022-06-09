@@ -4,8 +4,14 @@ from PyQt6.QtWidgets import *
 from PyQt6.QtGui import *
 from PyQt6.QtGui import QBrush
 import sys
+import time
+import os
+import subprocess
+import csv
+import uuid
 sys.path.append('../')
 import models
+
 
 
 class Ui_Simulation(object):
@@ -31,11 +37,18 @@ class Ui_Simulation(object):
         self.graphicsView.setHorizontalScrollBarPolicy(QtCore.Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
         self.label = QtWidgets.QLabel(Simulation)
         self.label.setGeometry(QtCore.QRect(820, 20, 61, 16))
-        colors = [Qt.GlobalColor.white, Qt.GlobalColor.black, Qt.GlobalColor.cyan, Qt.GlobalColor.darkCyan, Qt.GlobalColor.red, Qt.GlobalColor.darkRed, Qt.GlobalColor.magenta, Qt.GlobalColor.darkMagenta, Qt.GlobalColor.green, Qt.GlobalColor.darkGreen, Qt.GlobalColor.yellow, Qt.GlobalColor.darkYellow, Qt.GlobalColor.blue, Qt.GlobalColor.darkBlue, Qt.GlobalColor.gray, Qt.GlobalColor.darkGray, Qt.GlobalColor.lightGray]
         font = QtGui.QFont()
         font.setPointSize(14)
         font.setBold(False)
         font.setItalic(False)
+
+        self.label_6 = QtWidgets.QLabel(Simulation)
+        self.label_6.setGeometry(QtCore.QRect(820, 250, 200, 100))
+        font = QtGui.QFont()
+        font.setPointSize(20)
+        self.label_6.setFont(font)
+        self.label_6.setObjectName("label_6")
+        
         self.label.setFont(font)
         self.app = QApplication.instance()
         self.label.setStyleSheet("font: 14pt \"Segoe UI\";")
@@ -137,7 +150,7 @@ class Ui_Simulation(object):
 
     def retranslateUi(self, Simulation):
         _translate = QtCore.QCoreApplication.translate
-        Simulation.setWindowTitle(_translate("Simulation", "Form"))
+        Simulation.setWindowTitle(_translate("Simulation", "Simulation"))
         self.label.setText(_translate("Simulation", "Round:"))
         self.roundCount.setText(_translate("Simulation", "0"))
         self.label_3.setText(_translate("Simulation", "Current Monsters:"))
@@ -151,16 +164,24 @@ class Ui_Simulation(object):
         # self.PauseButton.setText(_translate("Simulation", "Pause/Continue"))
         self.EndButton.setText(_translate("Simulation", "End"))
 
-    def Simulate(self):
-        # self.PauseButton.clicked.connect(self.Pause)
+    def endLabelShow(self): # function to show game over text
+            self.label_6.setText("GAME OVER")
+
+
+    def Simulate(self): #game and render loop 
+        # colors list to represent tribes
         colors = [Qt.GlobalColor.cyan, Qt.GlobalColor.darkCyan, Qt.GlobalColor.white, Qt.GlobalColor.darkRed, Qt.GlobalColor.magenta, Qt.GlobalColor.darkMagenta, Qt.GlobalColor.green, Qt.GlobalColor.darkGreen, Qt.GlobalColor.yellow, Qt.GlobalColor.darkYellow, Qt.GlobalColor.blue, Qt.GlobalColor.darkBlue, Qt.GlobalColor.gray, Qt.GlobalColor.darkGray, Qt.GlobalColor.lightGray]
-        startData = self.arr
+        startData = self.arr #array passed from menu window
+        csvname = 'data-'+ str(uuid.uuid4().hex) + '.csv'
+        f = open("csvlogs/" + csvname, 'x', newline='')
+        writer = csv.writer(f)
+        writer.writerow(["base.id", "base.currenthp", "base.morale", "base.populationList", "base.status"])
         self.PauseButton.setEnabled(False)
         self.PauseButton.setText("Pause (to be implemented)")
         self.scene = QGraphicsScene()
         self.scene.setSceneRect(0, 0, 800, 800)
         self.graphicsView.setScene(self.scene)
-
+        #background rendering
         edgeL = QPixmap(QImage('ui/assets/edge_L.png'))
         edgeT = QPixmap(QImage('ui/assets/edge_T.png'))
         edgeB = QPixmap(QImage('ui/assets/edge_B.png'))
@@ -195,7 +216,7 @@ class Ui_Simulation(object):
 
 
 
-        while (len(models.villageBase.baseList)) != 1 and self.exitCondition is False:
+        while (len(models.villageBase.baseList)) != 1 and self.exitCondition is False: # main loop
             roundCount += 1
             
 
@@ -212,11 +233,14 @@ class Ui_Simulation(object):
                     villager.move(tab, villager, models.villageBase.baseList)
                     villager.heal()
 
-            for base in models.villageBase.baseList:
+            for base in models.villageBase.baseList: #console and csv logging loop
                 print(f"nr {base.id} ,{base.currenthp} ,{base.morale} ,{len(base.populationList)} ,{base.status}")
+                writer.writerow([base.id, base.currenthp, base.morale, str(len(base.populationList)), base.status])
             print()
+            writer.writerow("")
 
-            if(startData[3] > 0 and roundCount % startData[3] == 0):
+
+            if(startData[3] > 0 and roundCount % startData[3] == 0): # spawning food accordingly to foodspawnrate input
                 models.resource.spawnRate(tab)
 
             if(roundCount == 100):
@@ -224,7 +248,7 @@ class Ui_Simulation(object):
             if(roundCount % 400 == 0):
                 models.villageBase.globalWar()
 
-                
+            # updating live simulation info texts    
             self.roundCount.setText(str(roundCount))
             self.monsterCount.setText(str(len(models.monster.monsterList)))
             self.tribeCount.setText(str(len(models.villageBase.baseList)))
@@ -263,31 +287,41 @@ class Ui_Simulation(object):
                     self.scene.addRect(QRectF((villager.cox)*8, (villager.coy)*8, 8, 8), pen, brush)
             pen.setWidth(3)
             for base in models.villageBase.baseList:
-<<<<<<< HEAD
                 brush = QBrush(colors[base.getColorId()], Qt.BrushStyle.SolidPattern)
-                self.scene.addRect(QRectF((base.cox)*8, (base.coy)*8, 8, 8), QPen(), brush)
-=======
-                brush = QBrush(colors[base.colorId], Qt.BrushStyle.SolidPattern)
                 self.scene.addRect(QRectF((base.cox)*8, (base.coy)*8, 8, 8), pen, brush)
->>>>>>> 5aefaf24315132ba3ec2dc0904a753e64a2d0e9a
 
+            #updating the view
             self.app.processEvents()
             self.scene.update()
             self.graphicsView.show()
 
-            if(len(models.villageBase.baseList) <= 1):
+            if(len(models.villageBase.baseList) <= 1): # game end check
+                self.endLabelShow()
+                f.close()
+                time.sleep(1)
+                filename = 'csvlogs\\' + csvname #opening csv file in user's default application
+                if sys.platform == "win32":
+                    os.startfile(filename) # windows case
+                else: # macOS and unix cases
+                    opener = "open" if sys.platform == "darwin" else "xdg-open"
+                    subprocess.call([opener, filename])
+
                 return
-            QtTest.QTest.qWait(int(1000/(w+h)+self.simSpeedSlider.value()))
+            QtTest.QTest.qWait(int(1000/(w+h)+self.simSpeedSlider.value())) 
+            #combining slider value and map dimensions to scale the speed properly
 
-            self.scene.clear()
+            self.scene.clear() # preparing view for another round of rendering
+        
+            
 
 
-if __name__ == "__main__":
+
+if __name__ == "__main__": #debugging tool
     import sys
     app = QtWidgets.QApplication(sys.argv)
-    Form = QtWidgets.QWidget()
+    Simulation = QtWidgets.QWidget()
     ui = Ui_Simulation()
     array = []
-    ui.setupUi(Form, array)
-    Form.show()
+    ui.setupUi(Simulation, array)
+    Simulation.show()
     sys.exit(app.exec())

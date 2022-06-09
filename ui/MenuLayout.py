@@ -14,7 +14,7 @@ class Ui_Form(object):
 
 
 
-    def clickedbutton(self):
+    def clickedbutton(self): # checks if user closed the window with start or 'X' button
         self.condition = True
         app = QApplication.instance()
         app.closeAllWindows()
@@ -264,7 +264,7 @@ class Ui_Form(object):
         self.pushButton.clicked.connect(self.clickedbutton)
         self.verticalLayout.addWidget(self.pushButton)
 
-        def limiter():
+        def limiter(): #limits tribe amount accordingly to map area
             if self.horizontalSlider_dimX.value()*self.horizontalSlider_dimY.value() < 400:
                 self.horizontalSlider_TribeAmnt.setMaximum(3)
             elif self.horizontalSlider_dimX.value()*self.horizontalSlider_dimY.value() < 900:
@@ -315,7 +315,7 @@ class Ui_Form(object):
 
 
 
-if __name__ == "__main__":
+if __name__ == "__main__": #debugging tool
     import sys
     app = QtWidgets.QApplication(sys.argv)
     Form = QtWidgets.QWidget()
