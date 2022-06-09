@@ -263,13 +263,8 @@ class Ui_Simulation(object):
                     self.scene.addRect(QRectF((villager.cox)*8, (villager.coy)*8, 8, 8), pen, brush)
             pen.setWidth(3)
             for base in models.villageBase.baseList:
-<<<<<<< HEAD
                 brush = QBrush(colors[base.getColorId()], Qt.BrushStyle.SolidPattern)
-                self.scene.addRect(QRectF((base.cox)*8, (base.coy)*8, 8, 8), QPen(), brush)
-=======
-                brush = QBrush(colors[base.colorId], Qt.BrushStyle.SolidPattern)
                 self.scene.addRect(QRectF((base.cox)*8, (base.coy)*8, 8, 8), pen, brush)
->>>>>>> 5aefaf24315132ba3ec2dc0904a753e64a2d0e9a
 
             self.app.processEvents()
             self.scene.update()
