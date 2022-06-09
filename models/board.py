@@ -90,11 +90,11 @@ class board:
         x = 0
         baseListShortcut = models.villageBase.baseList
         if(tribeCount == 1):
-            if(models.calc.rangeBetween(baseListShortcut[tribeCount-1].cox, baseListShortcut[tribeCount-1].coy, pos[0], pos[1]) >= 3):
+            if(models.calc.rangeBetween(baseListShortcut[tribeCount-1].cox, baseListShortcut[tribeCount-1].coy, pos[0], pos[1]) >= 2):
                 return pos
         while (x != tribeCount):
             for i in range(1, tribeCount+1):
-                if(models.calc.rangeBetween(baseListShortcut[tribeCount-i].cox, baseListShortcut[tribeCount-i].coy, pos[0], pos[1]) >= 3):
+                if(models.calc.rangeBetween(baseListShortcut[tribeCount-i].cox, baseListShortcut[tribeCount-i].coy, pos[0], pos[1]) >= 2):
                     x = x + 1
             if(x != tribeCount):
                 x = 0

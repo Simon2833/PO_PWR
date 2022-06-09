@@ -9,6 +9,7 @@ import models
 
 
 class Ui_Simulation(object):
+    # Exit button functionality
     def clickedbutton(self):
         self.exitCondition = True
         self.app.closeAllWindows()
@@ -191,12 +192,12 @@ class Ui_Simulation(object):
         tab = board.boardGenerate(tab, startData[1], startData[0], startData[2], startData[4])
 
         roundCount = 0
+
+
+
         while (len(models.villageBase.baseList)) != 1 and self.exitCondition is False:
             roundCount += 1
-            self.roundCount.setText(str(roundCount))
-            self.monsterCount.setText(str(len(models.monster.monsterList)))
-            self.tribeCount.setText(str(len(models.villageBase.baseList)))
-            self.foodCount.setText(str(len(models.resource.resourceList)))
+            
 
             # CHECKING BOARD IN RANGE OF EVERY OBJECT ON THE BOARD and attacking
             for monster in models.monster.monsterList:
@@ -223,6 +224,11 @@ class Ui_Simulation(object):
             if(roundCount % 400 == 0):
                 models.villageBase.globalWar()
 
+                
+            self.roundCount.setText(str(roundCount))
+            self.monsterCount.setText(str(len(models.monster.monsterList)))
+            self.tribeCount.setText(str(len(models.villageBase.baseList)))
+            self.foodCount.setText(str(len(models.resource.resourceList)))
 
 # ################################### VVVVVVVVV RENDERING VVVVVVVV ###################################
 
@@ -247,7 +253,7 @@ class Ui_Simulation(object):
             for monster in models.monster.monsterList:
                 self.scene.addRect(QRectF((monster.cox)*8, (monster.coy)*8, 8, 8), pen, brush)
 
-            brush = QBrush(Qt.GlobalColor.red, Qt.BrushStyle.Dense2Pattern)
+            brush = QBrush(Qt.GlobalColor.red, Qt.BrushStyle.Dense3Pattern)
             for resource in models.resource.resourceList:
                 self.scene.addRect(QRectF((resource.cox)*8, (resource.coy)*8, 8, 8), pen, brush)
 
@@ -255,10 +261,10 @@ class Ui_Simulation(object):
                 brush = QBrush(colors[base.colorId], Qt.BrushStyle.SolidPattern)
                 for villager in base.populationList:
                     self.scene.addRect(QRectF((villager.cox)*8, (villager.coy)*8, 8, 8), pen, brush)
-
+            pen.setWidth(3)
             for base in models.villageBase.baseList:
                 brush = QBrush(colors[base.colorId], Qt.BrushStyle.SolidPattern)
-                self.scene.addRect(QRectF((base.cox)*8, (base.coy)*8, 8, 8), QPen(), brush)
+                self.scene.addRect(QRectF((base.cox)*8, (base.coy)*8, 8, 8), pen, brush)
 
             self.app.processEvents()
             self.scene.update()

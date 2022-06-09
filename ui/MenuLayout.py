@@ -220,7 +220,7 @@ class Ui_Form(object):
         self.horizontalLayout_10.addWidget(self.label_5)
         self.horizontalSlider_TribeAmnt = QtWidgets.QSlider(self.layoutWidget)
         self.horizontalSlider_TribeAmnt.setMinimum(2)
-        self.horizontalSlider_TribeAmnt.setMaximum(15)
+        self.horizontalSlider_TribeAmnt.setMaximum(3)
         self.horizontalSlider_TribeAmnt.setPageStep(1)
         self.horizontalSlider_TribeAmnt.setOrientation(QtCore.Qt.Orientation.Horizontal)
         self.horizontalSlider_TribeAmnt.setTickPosition(QtWidgets.QSlider.TickPosition.NoTicks)
@@ -264,10 +264,23 @@ class Ui_Form(object):
         self.pushButton.clicked.connect(self.clickedbutton)
         self.verticalLayout.addWidget(self.pushButton)
 
+        def limiter():
+            if self.horizontalSlider_dimX.value()*self.horizontalSlider_dimY.value() < 400:
+                self.horizontalSlider_TribeAmnt.setMaximum(3)
+            elif self.horizontalSlider_dimX.value()*self.horizontalSlider_dimY.value() < 900:
+                self.horizontalSlider_TribeAmnt.setMaximum(6)
+            else:
+                self.horizontalSlider_TribeAmnt.setMaximum(15)
+
+
+
+
         
 
 
         self.retranslateUi(Form)
+        self.horizontalSlider_dimX.valueChanged.connect(limiter)
+        self.horizontalSlider_dimY.valueChanged.connect(limiter)
         self.horizontalSlider_dimX.valueChanged['int'].connect(self.dimX_prev.setNum) # type: ignore
         self.horizontalSlider_dimY.valueChanged['int'].connect(self.dimY_prev.setNum) # type: ignore
         self.horizontalSlider_TribeAmnt.valueChanged['int'].connect(self.TribeAmount_prev.setNum) # type: ignore
