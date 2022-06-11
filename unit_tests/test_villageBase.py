@@ -19,7 +19,7 @@ class testBoard(unittest.TestCase):
         assert(villageBase.baseList[1].morale == 40 and len(villageBase.baseList[1].populationList) == 2)
         assert(villageBase.baseList[0].morale == 50 and len(villageBase.baseList[0].populationList) == 4)
 
-    def testYear1939AndChristmasTruce(self):
+    def testGlobalWarAndGlobalPeace(self):
         villageBase.year1939()
         for base in villageBase.baseList:
             assert(base.status == "war")
