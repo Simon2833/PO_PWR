@@ -31,6 +31,7 @@ class villageBase(unitStatic):
         return self.__colorId
 
     def deletion(self, tribe, list, tab):
+        # Refresh the id in baseList and transfer the rest of villagers to victorious tribe
         for villager in self.populationList:
             villager.id = len(tribe.populationList)
             tribe.populationList.append(villager)
@@ -42,6 +43,7 @@ class villageBase(unitStatic):
                 villager.tribe = list[base].id
 
     def moraleUpdate(self, tribe, list, tab):
+        # morale can add new villager or delete one from beginning of list, can also destry base if last villager dies of hunger
         self.morale = self.morale - 1
 
         if(self.morale >= 100):
@@ -79,10 +81,12 @@ class villageBase(unitStatic):
 
     @classmethod
     def globalPeace(cls):
+        # All out war because if they are in corners it's more fun to watch them go to each other
         for base in villageBase.baseList:
             base.status = "peace"
 
     @classmethod
     def globalWar(cls):
+        # Early all out peace to reset war status witch at this time everyone has on
         for base in villageBase.baseList:
             base.status = "war"

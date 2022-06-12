@@ -20,6 +20,7 @@ class calc:
 
     @classmethod
     def movePos(cls, tab, ent, baseList):
+        # Moving dynamic objects and checking if they're in board range and empty spot
         escape = 0
         if(ent.getType() == "monster"): pos = calc.__monsterFindMovePos(ent)
         else: pos = calc.__villagerFindMovePos(ent, baseList)
@@ -56,6 +57,7 @@ class calc:
 
     @classmethod
     def __monsterFindMovePos(cls, ent):
+        # Finds random position for monster within his range
         x = random.randint(ent.cox - ent.range, ent.cox + ent.range)
         y = random.randint(ent.coy - ent.range, ent.coy + ent.range)
         pos = [x, y]
@@ -63,7 +65,7 @@ class calc:
 
     @classmethod
     def __villagerFindMovePos(cls, ent, baseList):
-
+        # Finds random position for villager within his range and have aggro when is on the war with other tribe
         x = random.randint(ent.cox - ent.range, ent.cox + ent.range)
         y = random.randint(ent.coy - ent.range, ent.coy + ent.range)
         pos = [x, y]

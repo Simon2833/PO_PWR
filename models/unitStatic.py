@@ -1,7 +1,7 @@
 from models.unit import unit
 
 
-# Basic villager class from whom every other citizen class is inherited
+# Static unit class from whom every other static class is inherited
 class unitStatic(unit):
 
     def __init__(self, cox, coy, id):

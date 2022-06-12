@@ -13,7 +13,6 @@ sys.path.append('../')
 import models
 
 
-
 class Ui_Simulation(object):
     # Exit button functionality
     def clickedbutton(self):
@@ -168,10 +167,10 @@ class Ui_Simulation(object):
             self.label_6.setText("GAME OVER")
 
 
-    def Simulate(self): #game and render loop 
+    def Simulate(self):  # game and render loop
         # colors list to represent tribes
         colors = [Qt.GlobalColor.cyan, Qt.GlobalColor.darkCyan, Qt.GlobalColor.white, Qt.GlobalColor.darkRed, Qt.GlobalColor.magenta, Qt.GlobalColor.darkMagenta, Qt.GlobalColor.green, Qt.GlobalColor.darkGreen, Qt.GlobalColor.yellow, Qt.GlobalColor.darkYellow, Qt.GlobalColor.blue, Qt.GlobalColor.darkBlue, Qt.GlobalColor.gray, Qt.GlobalColor.darkGray, Qt.GlobalColor.lightGray]
-        startData = self.arr #array passed from menu window
+        startData = self.arr  # array passed from menu window
         csvname = 'data-'+ str(uuid.uuid4().hex) + '.csv'
         f = open("csvlogs/" + csvname, 'x', newline='')
         writer = csv.writer(f)
@@ -181,7 +180,7 @@ class Ui_Simulation(object):
         self.scene = QGraphicsScene()
         self.scene.setSceneRect(0, 0, 800, 800)
         self.graphicsView.setScene(self.scene)
-        #background rendering
+        # background rendering
         edgeL = QPixmap(QImage('ui/assets/edge_L.png'))
         edgeT = QPixmap(QImage('ui/assets/edge_T.png'))
         edgeB = QPixmap(QImage('ui/assets/edge_B.png'))
@@ -214,11 +213,8 @@ class Ui_Simulation(object):
 
         roundCount = 0
 
-
-
-        while (len(models.villageBase.baseList)) != 1 and self.exitCondition is False: # main loop
+        while (len(models.villageBase.baseList)) != 1 and self.exitCondition is False:  # Main loop
             roundCount += 1
-            
 
             # CHECKING BOARD IN RANGE OF EVERY OBJECT ON THE BOARD and attacking
             for monster in models.monster.monsterList:
@@ -233,19 +229,18 @@ class Ui_Simulation(object):
                     villager.move(tab, villager, models.villageBase.baseList)
                     villager.heal()
 
-            for base in models.villageBase.baseList: #console and csv logging loop
+            for base in models.villageBase.baseList:  # Console and csv logging loop
                 base.moraleUpdate("None", models.villageBase.baseList, tab)
                 writer.writerow([base.id, base.currenthp, base.morale, str(len(base.populationList)), base.status])
             print()
             writer.writerow("")
-
 
             if(startData[3] > 0 and roundCount % startData[3] == 0): # spawning food accordingly to foodspawnrate input
                 models.resource.spawnRate(tab)
 
             if(roundCount == 100):
                 models.villageBase.globalPeace()
-            if(roundCount % 400 == 0):
+            if(roundCount == 400):
                 models.villageBase.globalWar()
 
             # updating live simulation info texts    
@@ -295,28 +290,25 @@ class Ui_Simulation(object):
             self.scene.update()
             self.graphicsView.show()
 
-            if(len(models.villageBase.baseList) <= 1): # game end check
+            if(len(models.villageBase.baseList) <= 1):  # Game end check
                 self.endLabelShow()
                 f.close()
                 time.sleep(1)
-                filename = 'csvlogs\\' + csvname #opening csv file in user's default application
+                filename = 'csvlogs\\' + csvname  # Opening csv file in user's default application
                 if sys.platform == "win32":
                     os.startfile(filename) # windows case
-                else: # macOS and unix cases
+                else:  # macOS and unix cases
                     opener = "open" if sys.platform == "darwin" else "xdg-open"
                     subprocess.call([opener, filename])
 
                 return
             QtTest.QTest.qWait(int(1000/(w+h)+self.simSpeedSlider.value())) 
-            #combining slider value and map dimensions to scale the speed properly
+            # Combining slider value and map dimensions to scale the speed properly
 
-            self.scene.clear() # preparing view for another round of rendering
+            self.scene.clear()  # Preparing view for another round of rendering
         
-            
 
-
-
-if __name__ == "__main__": #debugging tool
+if __name__ == "__main__":  # Debugging tool
     import sys
     app = QtWidgets.QApplication(sys.argv)
     Simulation = QtWidgets.QWidget()

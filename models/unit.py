@@ -1,7 +1,7 @@
 from abc import ABC, abstractmethod
 
 
-# Basic villager class from whom every other citizen class is inherited
+# Basic abstract class from whom every other unit class is inherited
 class unit(ABC):
 
     def __init__(self, cox, coy, id):

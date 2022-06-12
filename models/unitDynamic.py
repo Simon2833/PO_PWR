@@ -17,6 +17,7 @@ class unitDynamic(unit):
 
     @classmethod
     def move(cls, tab, entity, baseList):
+        # Move object to another position leaving empty slot
         name = type(entity).__name__
         tab[entity.coy][entity.cox] = 0
         mPos = models.calc.movePos(tab, entity, baseList)
@@ -39,6 +40,7 @@ class unitDynamic(unit):
         pass
 
     def heal(self):
+        # Every round unit gets back 2 hp
         if(self.currenthp < self.maxhp):
             self.currenthp = self.currenthp + 2
             if(self.currenthp > self.maxhp):
@@ -71,8 +73,8 @@ class unitDynamic(unit):
         if(0 > (ent.cox + x) or (len(tab[1])-1) < (ent.cox + x) or 0 > (ent.coy + y) or (len(tab)-1) < (ent.coy + y)):
             return
 
-        # Checks if there is villager in monsters range
         checked = tab[ent.coy + y][ent.cox + x]
+        # Finds type of object and interacts with checked spot
         if(ent.getType() == "monster"):
             if(checked in [4, 5, 6]):
                 unitDynamic.__monsterVillager(ent, x, y, tab)
@@ -109,6 +111,7 @@ class unitDynamic(unit):
 
     @classmethod
     def __villagerVillager(cls, ent, x, y, tab):
+        # Checks if can make alliance or to attack
         for villagerlist in models.villageBase.baseList:
             if(ent.tribe == villagerlist.id): continue
             for villager in villagerlist.populationList:
@@ -128,12 +131,14 @@ class unitDynamic(unit):
 
     @classmethod
     def __villagerFood(cls, ent, x, y, tab):
+        # Checks if can be harvested
         for food in models.resource.resourceList:
             if(ent.cox + x != food.cox or ent.coy + y != food.coy): continue
             food.deletion(models.villageBase.baseList[ent.tribe], models.resource.resourceList, tab)
 
     @classmethod
     def __villagerBase(cls, ent, x, y, tab):
+        # Check if can attack base, only possible when both of tribes are at war
         for base in models.villageBase.baseList:
             if(ent.tribe == base.id or models.villageBase.baseList[ent.tribe].status != "war" or base.status != "war"): continue
             if(ent.cox + x != base.cox or ent.coy + y != base.coy): continue
@@ -144,6 +149,7 @@ class unitDynamic(unit):
 
     @classmethod
     def __villagerMonster(cls, ent, x, y, tab):
+        # Check if can attack monster
         for monsterEnemy in models.monster.monsterList:
             if(ent.cox + x != monsterEnemy.cox or ent.coy + y != monsterEnemy.coy): continue
             monsterEnemy.currenthp = monsterEnemy.currenthp - ent.attack
@@ -152,6 +158,7 @@ class unitDynamic(unit):
 
     @classmethod
     def __monsterVillager(cls, ent, x, y, tab):
+        # Check if can attack villager
         for villagerlist in models.villageBase.baseList:
             for villager in villagerlist.populationList:
                 if(ent.cox + x != villager.cox or ent.coy + y != villager.coy): continue

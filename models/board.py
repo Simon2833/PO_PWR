@@ -100,5 +100,3 @@ class board:
                 x = 0
                 pos = models.calc.randomPos(self.__cox, self.__coy)
         return pos
-
-
