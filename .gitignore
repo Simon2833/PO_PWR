@@ -1,9 +1,12 @@
-#IDE files
+# IDE files
 .idea
 .vscode
 
-#Python cache
+# Python cache
 __pycache__
 
-#DrawIo temp files
+# DrawIo temp files
 .bkm
+
+# Csv logs
+.csv
