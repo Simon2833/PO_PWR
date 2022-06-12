@@ -9,4 +9,4 @@ __pycache__
 .bkm
 
 # Csv logs
-.csv
+csvlogs/*.csv
