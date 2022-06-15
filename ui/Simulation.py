@@ -163,15 +163,14 @@ class Ui_Simulation(object):
         # self.PauseButton.setText(_translate("Simulation", "Pause/Continue"))
         self.EndButton.setText(_translate("Simulation", "End"))
 
-    def endLabelShow(self): # function to show game over text
-            self.label_6.setText("GAME OVER")
-
+    def endLabelShow(self):  # function to show game over text
+        self.label_6.setText("GAME OVER")
 
     def Simulate(self):  # game and render loop
         # colors list to represent tribes
         colors = [Qt.GlobalColor.cyan, Qt.GlobalColor.darkCyan, Qt.GlobalColor.white, Qt.GlobalColor.darkRed, Qt.GlobalColor.magenta, Qt.GlobalColor.darkMagenta, Qt.GlobalColor.green, Qt.GlobalColor.darkGreen, Qt.GlobalColor.yellow, Qt.GlobalColor.darkYellow, Qt.GlobalColor.blue, Qt.GlobalColor.darkBlue, Qt.GlobalColor.gray, Qt.GlobalColor.darkGray, Qt.GlobalColor.lightGray]
         startData = self.arr  # array passed from menu window
-        csvname = 'data-'+ str(uuid.uuid4().hex) + '.csv'
+        csvname = 'data-' + str(uuid.uuid4().hex) + '.csv'
         f = open("csvlogs/" + csvname, 'x', newline='')
         writer = csv.writer(f)
         writer.writerow(["base.id", "base.currenthp", "base.morale", "base.populationList", "base.status"])
@@ -235,7 +234,7 @@ class Ui_Simulation(object):
             print()
             writer.writerow("")
 
-            if(startData[3] > 0 and roundCount % startData[3] == 0): # spawning food accordingly to foodspawnrate input
+            if(startData[3] > 0 and roundCount % startData[3] == 0):  # spawning food accordingly to foodspawnrate input
                 models.resource.spawnRate(tab)
 
             if(roundCount == 100):
@@ -285,7 +284,7 @@ class Ui_Simulation(object):
                 brush = QBrush(colors[base.getColorId()], Qt.BrushStyle.SolidPattern)
                 self.scene.addRect(QRectF((base.cox)*8, (base.coy)*8, 8, 8), pen, brush)
 
-            #updating the view
+            # updating the view
             self.app.processEvents()
             self.scene.update()
             self.graphicsView.show()
@@ -294,12 +293,15 @@ class Ui_Simulation(object):
                 self.endLabelShow()
                 f.close()
                 time.sleep(1)
-                filename = 'csvlogs\\' + csvname  # Opening csv file in user's default application
-                if sys.platform == "win32":
-                    os.startfile(filename) # windows case
-                else:  # macOS and unix cases
-                    opener = "open" if sys.platform == "darwin" else "xdg-open"
-                    subprocess.call([opener, filename])
+
+                # EXCEL WITH STATISTICS
+
+                # filename = 'csvlogs\\' + csvname  # Opening csv file in user's default application
+                # if sys.platform == "win32":
+                #     os.startfile(filename)  # windows case
+                # else:  # macOS and unix cases
+                #     opener = "open" if sys.platform == "darwin" else "xdg-open"
+                #     subprocess.call([opener, filename])
 
                 return
             QtTest.QTest.qWait(int(1000/(w+h)+self.simSpeedSlider.value())) 

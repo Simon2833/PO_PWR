@@ -75,22 +75,24 @@ class unitDynamic(unit):
 
         checked = tab[ent.coy + y][ent.cox + x]
         # Finds type of object and interacts with checked spot
-        if(ent.getType() == "monster"):
-            if(checked in [4, 5, 6]):
-                unitDynamic.__monsterVillager(ent, x, y, tab)
+        if(type(ent).__name__ == "monster"):
+            match checked:
+                case 4 | 5 | 6:
+                    unitDynamic.__monsterVillager(ent, x, y, tab)
 
-        elif(ent.getType() == "villager"):
-            if(checked == 1):
-                unitDynamic.__villagerFood(ent, x, y, tab)
+        elif(type(ent).__name__ in ["archer", "spearman", "warrior"]):
+            match checked:
+                case 1:
+                    unitDynamic.__villagerFood(ent, x, y, tab)
 
-            if(checked in [4, 5, 6]):
-                unitDynamic.__villagerVillager(ent, x, y, tab)
+                case 4 | 5 | 6:
+                    unitDynamic.__villagerVillager(ent, x, y, tab)
 
-            elif(checked == 3):
-                unitDynamic.__villagerBase(ent, x, y, tab)
+                case 3:
+                    unitDynamic.__villagerBase(ent, x, y, tab)
 
-            elif(checked == 2):
-                unitDynamic.__villagerMonster(ent, x, y, tab)
+                case 2:
+                    unitDynamic.__villagerMonster(ent, x, y, tab)
 
     @classmethod
     def __direction(cls, direction, x, y):

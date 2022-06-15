@@ -1,8 +1,10 @@
 from models.board import board
-import unittest
 
+from unittest import TestCase, mock
+import models
 
-class testBoard(unittest.TestCase):
+class testBoard(TestCase):
+
 
     def setUp(self):
         self.map = board(25, 75)
@@ -19,4 +21,10 @@ class testBoard(unittest.TestCase):
         assert(tab[4][12] in [0, 1, 2, 3, 4, 5, 6])
         assert(tab[1][1] in [0, 1, 2, 3, 4, 5, 6])
         assert(tab[15][2] in [0, 1, 2, 3, 4, 5, 6])
+
+    def testFoodGenerate(self):
+        with mock.patch.object(self.map, "_board__foodGenerate") as food:
+            self.map.boardGenerate(self.tab, 20, 3, 4, 5)
+            food.assert_called_once_with(self.tab, 20)
+
 

@@ -9,11 +9,7 @@ class monster(unitDynamic):
 
     def __init__(self, cox, coy, id, maxhp=100, attack=10, armor=10, range=2):
         super().__init__(cox, coy, id, maxhp, attack, armor, range)
-        self.__type = "monster"
         self.tribe = "None"
-
-    def getType(self):
-        return self.__type
 
     def deletion(self, tribe, list, tab):
         tab[self.coy][self.cox] = 0

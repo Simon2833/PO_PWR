@@ -7,10 +7,6 @@ class spearman(unitDynamic):
     def __init__(self, cox, coy, id, tribe, maxhp=150, armor=3, range=3, attack=2):
         super().__init__(cox, coy, id, maxhp, attack, armor, range)
         self.tribe = tribe
-        self.__type = "villager"
-
-    def getType(self):
-        return self.__type
 
     def deletion(self, tribe, list, tab):
         tab[self.coy][self.cox] = 0
