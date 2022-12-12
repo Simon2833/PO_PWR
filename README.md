@@ -2,9 +2,9 @@
 Project is created within the Object-oriented Programming subject at [Wrocław University of Science and Technology](https://pwr.edu.pl/).
 We are using Python 3.10, PyQt6 GUI library.
 ## Contributors:
-- *Szymon Gruszecki [Simon2833](https://github.com/Simon2833)*
-- *Olaf Lesiuk [olafles](https://github.com/olafles)*
-- *Jakub Kęsik [Kubagf](https://github.com/Kubagf)*
+- *Back-end Szymon Gruszecki [Simon2833](https://github.com/Simon2833)*
+- *Front-endOlaf Lesiuk [olafles](https://github.com/olafles)*
+- *Documentation Jakub Kęsik [Kubagf](https://github.com/Kubagf)*
 ## Tribes
 ---
 ### Description:
