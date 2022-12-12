@@ -3,7 +3,7 @@ Project is created within the Object-oriented Programming subject at [Wrocław U
 We are using Python 3.10, PyQt6 GUI library.
 ## Contributors:
 - *Back-end Szymon Gruszecki [Simon2833](https://github.com/Simon2833)*
-- *Front-endOlaf Lesiuk [olafles](https://github.com/olafles)*
+- *Front-end Olaf Lesiuk [olafles](https://github.com/olafles)*
 - *Documentation Jakub Kęsik [Kubagf](https://github.com/Kubagf)*
 ## Tribes
 ---
