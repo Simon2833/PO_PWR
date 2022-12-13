@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="5f70ce1f-db74-4eb9-9a00-945479a2d542" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/test_resource.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/test_unitDynamic.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/test_villageBase.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../models/archer.py" beforeDir="false" afterPath="$PROJECT_DIR$/../models/archer.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../models/board.py" beforeDir="false" afterPath="$PROJECT_DIR$/../models/board.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../models/calc.py" beforeDir="false" afterPath="$PROJECT_DIR$/../models/calc.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../models/spearman.py" beforeDir="false" afterPath="$PROJECT_DIR$/../models/spearman.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../models/unitDynamic.py" beforeDir="false" afterPath="$PROJECT_DIR$/../models/unitDynamic.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../models/unitStatic.py" beforeDir="false" afterPath="$PROJECT_DIR$/../models/unitStatic.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../models/villageBase.py" beforeDir="false" afterPath="$PROJECT_DIR$/../models/villageBase.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../models/warrior.py" beforeDir="false" afterPath="$PROJECT_DIR$/../models/warrior.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ui/Simulation.py" beforeDir="false" afterPath="$PROJECT_DIR$/../ui/Simulation.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test_board.py" beforeDir="false" afterPath="$PROJECT_DIR$/test_board.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test_calc.py" beforeDir="false" afterPath="$PROJECT_DIR$/test_calc.py" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="ProjectId" id="2ACdThlqNbAue8AOkgIW5YMGFEz" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="settings.editor.selected.configurable" value="terminal" />
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="5f70ce1f-db74-4eb9-9a00-945479a2d542" name="Changes" comment="" />
+      <created>1654517512914</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1654517512914</updated>
+    </task>
+    <servers />
+  </component>
+</project>
