@@ -1,22 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="5f70ce1f-db74-4eb9-9a00-945479a2d542" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/test_resource.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/test_unitDynamic.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/test_villageBase.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../models/archer.py" beforeDir="false" afterPath="$PROJECT_DIR$/../models/archer.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../models/board.py" beforeDir="false" afterPath="$PROJECT_DIR$/../models/board.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../models/calc.py" beforeDir="false" afterPath="$PROJECT_DIR$/../models/calc.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../models/spearman.py" beforeDir="false" afterPath="$PROJECT_DIR$/../models/spearman.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../models/unitDynamic.py" beforeDir="false" afterPath="$PROJECT_DIR$/../models/unitDynamic.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../models/unitStatic.py" beforeDir="false" afterPath="$PROJECT_DIR$/../models/unitStatic.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../models/villageBase.py" beforeDir="false" afterPath="$PROJECT_DIR$/../models/villageBase.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../models/warrior.py" beforeDir="false" afterPath="$PROJECT_DIR$/../models/warrior.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ui/Simulation.py" beforeDir="false" afterPath="$PROJECT_DIR$/../ui/Simulation.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test_board.py" beforeDir="false" afterPath="$PROJECT_DIR$/test_board.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test_calc.py" beforeDir="false" afterPath="$PROJECT_DIR$/test_calc.py" afterDir="false" />
-    </list>
+    <list default="true" id="5f70ce1f-db74-4eb9-9a00-945479a2d542" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
