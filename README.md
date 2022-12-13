@@ -2,9 +2,9 @@
 Project is created within the Object-oriented Programming subject at [Wrocław University of Science and Technology](https://pwr.edu.pl/).
 We are using Python 3.10, PyQt6 GUI library.
 ## Contributors:
-- *Szymon Gruszecki [Simon2833](https://github.com/Simon2833)*
-- *Olaf Lesiuk [olafles](https://github.com/olafles)*
-- *Jakub Kęsik [Kubagf](https://github.com/Kubagf)*
+- *Back-end Szymon Gruszecki [Simon2833](https://github.com/Simon2833)*
+- *Front-end Olaf Lesiuk [olafles](https://github.com/olafles)*
+- *Documentation Jakub Kęsik [Kubagf](https://github.com/Kubagf)*
 ## Tribes
 ---
 ### Description:
@@ -27,7 +27,7 @@ Simulation is based on behavior of people uniting into tribes. Main goal of each
 ### Mechanics:
 - War - starts when one unit is killed by other tribe, it is lasts till one of the village base will be destroyed or global peace event occurs.
 - Alliance - there is a minor chance that two passive tribes will be merged into one bigger tribe,
-- Morale - it slightly decrases over time, it depends on lost units, collected food and killed monters. Dropping below 0 will cause tribe to lose one unit, if morale hit 100 tribe will gain one unit; ine every situation morale goes back to 50.
+- Morale - it slightly decrases over time, it depends on lost units, collected food and killed monters. Dropping below 0 will cause tribe to lose one unit, if morale hit 100 tribe will gain one unit, in both situations morale goes back to 50.
 ### Simulation run example:
 ![simulation](/documentation/simulation.gif)
 
